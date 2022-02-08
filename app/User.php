@@ -36,4 +36,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * Function for checking Employee or not
+     *
+     */
+    public function isEmployee()
+    {
+        if ($this->role == 'employee') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * Function for checking Admin or not
+     *
+     */
+    public function isAdmin()
+    {
+        if ($this->role == 'admin') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
