@@ -19,5 +19,8 @@ Route::middleware('auth')->group(function () {
 
 //Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-    Route::match(['get', 'post'], '/dashboard', 'AdminDashboardController@view')->name('login');
+    Route::match(['get', 'post'], '/dashboard', 'AdminDashboardController@view')->name('dashboard');
+    Route::match(['get', 'post'], '/add-member', 'AdminAddMemberController@view')->name('add_member');
+    Route::match(['get', 'post'], '/add-member', 'AdminAddMemberController@store')->name('add_member');
+    Route::get('/view-member', 'AdminAddMemberController@view')->name('view_member');
 });

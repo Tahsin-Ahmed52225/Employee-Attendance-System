@@ -7,6 +7,7 @@
 @section('content')
 
 
+Hello
 
 
 @endsection
