@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
+
 use Closure;
 
 class EmployeeMiddleware
@@ -15,6 +17,10 @@ class EmployeeMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if (Auth::user()->isEmployee()) {
+            return $next($request);
+        }
+        Auth::logout();
+        return redirect('/login')->with(session()->flash('alert-danger', 'Non Permitted Route'));
     }
 }
