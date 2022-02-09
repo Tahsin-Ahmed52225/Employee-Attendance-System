@@ -26,25 +26,21 @@ class AuthController extends Controller
                     ->withInput();
             } else {
                 if (Auth::attempt(['email' =>  $request->email, 'password' => $request->password])) {
-                    if (Auth::user()->verified == 0) {
-                        Auth::logout();
-                        return redirect()->back()->with(session()->flash('alert-warning', 'Please verify your account'));
-                    } else {
-                        if (Auth::user()->role == "employee" || Auth::user()->role == "admin") {
-                            if (Auth::user()->stage == 1) {
-                                if (Auth::user()->role == "employee" && Auth::user()->position != "Manager") {
-                                    return redirect('/employee/dashboard');
-                                } else if (Auth::user()->role == "admin") {
-                                    return redirect('/admin/dashboard');
-                                }
-                            } else {
-                                Auth::logout();
-                                return redirect()->back()->with(session()->flash('alert-warning', 'Your account has been locked !'));
+
+                    if (Auth::user()->role == "employee" || Auth::user()->role == "admin") {
+                        if (Auth::user()->stage == 1) {
+                            if (Auth::user()->role == "employee") {
+                                return redirect('/employee/dashboard');
+                            } else if (Auth::user()->role == "admin") {
+                                return redirect('/admin/dashboard');
                             }
                         } else {
                             Auth::logout();
-                            return redirect()->back()->with(session()->flash('alert-warning', 'Not permitted route'));
+                            return redirect()->back()->with(session()->flash('alert-warning', 'Your account has been locked !'));
                         }
+                    } else {
+                        Auth::logout();
+                        return redirect()->back()->with(session()->flash('alert-warning', 'Not permitted route'));
                     }
                 } else {
                     return redirect()->back()->with(session()->flash('alert-danger', 'Incorract Credentials'));

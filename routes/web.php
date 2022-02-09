@@ -19,8 +19,20 @@ Route::middleware('auth')->group(function () {
 
 //Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    //Dashboard Route
     Route::match(['get', 'post'], '/dashboard', 'AdminDashboardController@view')->name('dashboard');
-    Route::match(['get', 'post'], '/add-member', 'AdminAddMemberController@view')->name('add_member');
-    Route::match(['get', 'post'], '/add-member', 'AdminAddMemberController@store')->name('add_member');
-    Route::get('/view-member', 'AdminAddMemberController@view')->name('view_member');
+    //Add member Route
+    Route::match(['get', 'post'], '/add-member', 'AdminAddMemberController@addMember')->name('add_member');
+    Route::get('/view-member', 'AdminAddMemberController@viewMember')->name('view_member');
+    Route::get('/delete-member', 'AdminAddMemberController@deleteMember')->name('delete_member');
+    Route::get('/update-member', 'AdminAddMemberController@updateMember')->name('update_member');
+    //Profile Route
+    Route::match(['get', 'post'], '/profile', 'AdminProfileController@view')->name('profile');
+});
+//Employee Routes
+Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->group(function () {
+    //Dashboard Route
+    Route::match(['get', 'post'], '/dashboard', 'EmployeeDashboardController@view')->name('dashboard');
+    //Profile Route
+    Route::match(['get', 'post'], '/profile', 'EmployeeProfileController@view')->name('profile');
 });

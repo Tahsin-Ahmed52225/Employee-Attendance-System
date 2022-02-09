@@ -18,10 +18,8 @@ class Admin_Seed extends Seeder
             'email' => 'admin@tdg.com',
             'number' => '1111111',
             'image' => null,
-            'position' => 'CEO',
+            'position' => 'admin',
             'role' => 'admin',
-            'verified' => 1,
-            'verification_code' => null,
             'stage' => 1,
             'password' => Hash::make('11223344'),
         ]);

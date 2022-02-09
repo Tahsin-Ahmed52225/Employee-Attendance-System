@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    TDG In&Out
+                    TDG
                 </div>
             </div>
         </div>
