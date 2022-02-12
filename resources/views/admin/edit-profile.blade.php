@@ -1,4 +1,4 @@
-@extends('layouts.employee_layout')
+@extends('layouts.admin_layout')
 @section("links")
 <!--begin::Page Vendors Styles(used by this page)-->
 <link href="{{ asset("assets/plugins/custom/fullcalendar/fullcalendar.bundle.css") }}" rel="stylesheet" type="text/css" />
@@ -13,7 +13,44 @@
         <!--begin::Container-->
         <div class="container" >
             <!--begin::Profile Account Information-->
+            @if (session()->has('success'))
+                    <div class="alert alert-custom alert-light-success fade show mb-5 d-flex py-2" role="alert">
+                        <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                        <div class="alert-text">{{ session()->get('success') }}
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+                @if (session()->has('rejected'))
+                    <div class="alert alert-custom alert-light-danger fade show mb-5 d-flex py-2" role="alert">
+                        <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                        <div class="alert-text">{{ session()->get('rejected') }}
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+                @if (session()->has('warning'))
+                <div class="alert alert-custom alert-light-warning fade show mb-5 d-flex py-2" role="alert">
+                    <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                    <div class="alert-text">{{ session()->get('warning') }}
+                    </div>
+                    <div class="alert-close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+                @endif
             <div class="row ">
+                
                 <div class="col-md-4 col-sm-12 ">
                     <!--begin::Profile Card-->
                     <div class="card card-custom  my-auto">
@@ -64,10 +101,10 @@
                             <!--begin::Nav-->
                             <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                                 <div class="navi-item mb-2">
-                                    <a href="custom/apps/profile/profile-1/change-password.html" class="navi-link py-4">
+                                    <a href="custom/apps/profile/profile-1/account-information.html" class="navi-link py-4 active">
                                         <span class="navi-icon mr-2">
                                             <span class="svg-icon">
-                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg-->
+                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                         <rect x="0" y="0" width="24" height="24" />
@@ -82,7 +119,6 @@
                                         <span class="navi-text font-size-lg">Change Password</span>
                                     </a>
                                 </div>
-
                             </div>
                             <!--end::Nav-->
                         </div>
@@ -93,23 +129,30 @@
 
                 <div class="col-md-8 col-sm-12 ">
                     <!--begin::Card-->
-                    <div class="card card-custom  my-auto" id="account_info">
+                    <div class="card card-custom  my-auto pt-4" id="account_info">
                         <!--begin::Header-->
                         <div class="card-header py-5" >
-                            <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">Account Information</h3>
+                            <div class="card-title w-100 justify-content-between">
+                                    <div class="float-left">   <h3 class="card-label font-weight-bolder text-dark">Account Information</h3> </div>
+                                    <div>
+                                        <a href="{{ route("admin.profile") }}"> <button class="btn btn-sm btn-light ">Back to Profile</button> </a>
+                                        <button id="update_profile" class="btn btn-sm btn-primary">Update Profile</button>
+                                    </div>
                             </div>
+
+
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
-                        <form class="form">
+                        <form id="profile_update_form" class="form" method="POST" accept="{{ route("admin.edit_profile") }}">
+                        @csrf
                             <div class="card-body">
                                 <!--begin::Form Group-->
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <div class="">
-                                            <input class="form-control form-control-lg form-control-solid" type="text" value="{{ $user->name }}" disabled />
+                                        <div>
+                                            <input name="user_name" class="form-control form-control-lg " type="text" value="{{ $user->name }}"  />
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +166,7 @@
                                                     <i class="la la-at"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="{{ $user->email }}" disabled />
+                                            <input type="text" class="form-control form-control-lg form-control-solid" style="color:#c3c3c3" name="user_mail" value="{{ $user->email }}" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +180,7 @@
                                                     <i class="la la-phone"></i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="{{ $user->number }}" disabled />
+                                            <input name="user_number" type="text" class="form-control form-control-lg form-control-solid" style="background: white; border:#E4E6EF 1px solid;" value="{{ $user->number }}"  />
                                         </div>
                                     </div>
                                  </div>
@@ -145,21 +188,16 @@
                                   <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label">Position </label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <div class="input-group input-group-lg input-group-solid">
-                                            <input type="text" class="form-control form-control-lg form-control-solid" value="{{ $user->position }}" disabled />
-                                        </div>
+                                        <select class="form-control" id="exampleSelect1" name="user_position">
+                                            <option value="admin">Admin</option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Web developer">Web Developer</option>
+                                            <option value="Desiger">Designer</option>
+                                            <option value="Content writer">Content Writer</option>
+                                            <option value="Support">Support</option>
+                                        </select>
                                     </div>
                                  </div>
-                                      <!--begin::Form Group-->
-                                      <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">National ID No:</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group input-group-lg input-group-solid">
-
-                                                <input type="text" class="form-control form-control-lg form-control-solid" value="Hello" disabled />
-                                            </div>
-                                        </div>
-                                    </div>
                             </div>
 
                         </form>
@@ -181,6 +219,7 @@
 @section("scripts")
    <script src="{{ asset("assets/plugins/custom/fullcalendar/fullcalendar.bundle.js") }}"></script>
    <script src="{{ asset("assets/js/pages/widgets.js") }}"></script>
+   <script src="{{ asset("dev-assets/js/edit-profile.js") }}"></script>
 @endsection
 
 

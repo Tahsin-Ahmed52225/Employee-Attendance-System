@@ -20,23 +20,9 @@
                         <!--begin::Body-->
                         <div class="card-body">
                             <!--begin::User-->
-                            <div class="">
-                                <div class="image-input image-input-outline" id="kt_image_4" style="background-image: url(assets/media/>users/blank.png)">
-                                    <div class="image-input-wrapper" style="background-image: url(https://picsum.photos/200)"></div>
-
-                                    <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                    <i class="fa fa-pen icon-sm text-muted"></i>
-                                    <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg"/>
-                                    <input type="hidden" name="profile_avatar_remove"/>
-                                    </label>
-
-                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                    </span>
-
-                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                    </span>
+                            <div>
+                                <div class="image-input" id="kt_image_4" style="background-image: url(assets/media/>users/blank.png)">
+                                    <div class="image-input-wrapper" style="background-image: url({{ ($user->image == NULL) ? asset("./files/profile_pics/pp.jpg") : $user->image}})"></div>
                                </div>
 
                             </div>
@@ -64,28 +50,10 @@
                             <!--begin::Nav-->
                             <div class="navi navi-bold navi-hover navi-active navi-link-rounded">
                                 <div class="navi-item mb-2">
-                                    <a href="#account_info" class="navi-link py-4 active">
+                                    <a href="custom/apps/profile/profile-1/account-information.html" class="navi-link py-4 active">
                                         <span class="navi-icon mr-2">
                                             <span class="svg-icon">
                                                 <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Compiling.svg-->
-                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <rect x="0" y="0" width="24" height="24" />
-                                                        <path d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z" fill="#000000" opacity="0.3" />
-                                                        <path d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z" fill="#000000" />
-                                                    </g>
-                                                </svg>
-                                                <!--end::Svg Icon-->
-                                            </span>
-                                        </span>
-                                        <span class="navi-text font-size-lg">Account Information</span>
-                                    </a>
-                                </div>
-                                <div class="navi-item mb-2">
-                                    <a href="custom/apps/profile/profile-1/change-password.html" class="navi-link py-4">
-                                        <span class="navi-icon mr-2">
-                                            <span class="svg-icon">
-                                                <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                         <rect x="0" y="0" width="24" height="24" />
@@ -100,7 +68,6 @@
                                         <span class="navi-text font-size-lg">Change Password</span>
                                     </a>
                                 </div>
-
                             </div>
                             <!--end::Nav-->
                         </div>
@@ -111,12 +78,15 @@
 
                 <div class="col-md-8 col-sm-12 ">
                     <!--begin::Card-->
-                    <div class="card card-custom  my-auto" id="account_info">
+                    <div class="card card-custom  my-auto pt-4" id="account_info">
                         <!--begin::Header-->
                         <div class="card-header py-5" >
-                            <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">Account Information</h3>
+                            <div class="card-title w-100 justify-content-between">
+                                    <div class="float-left">   <h3 class="card-label font-weight-bolder text-dark">Account Information</h3> </div>
+                                    <div> <a href="{{ route("admin.edit_profile") }}"> <button class="btn btn-sm btn-primary ">Edit Profile</button> </a> </div>
                             </div>
+
+
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
@@ -168,16 +138,6 @@
                                         </div>
                                     </div>
                                  </div>
-                                      <!--begin::Form Group-->
-                                      <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">National ID No:</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group input-group-lg input-group-solid">
-
-                                                <input type="text" class="form-control form-control-lg form-control-solid" value="Hello" disabled />
-                                            </div>
-                                        </div>
-                                    </div>
                             </div>
 
                         </form>

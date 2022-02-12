@@ -27,7 +27,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/delete-member', 'AdminAddMemberController@deleteMember')->name('delete_member');
     Route::get('/update-member', 'AdminAddMemberController@updateMember')->name('update_member');
     //Profile Route
-    Route::match(['get', 'post'], '/profile', 'AdminProfileController@view')->name('profile');
+    Route::get('/profile', 'AdminProfileController@view')->name('profile');
+    Route::match(['get', 'post'], '/edit-profile', 'AdminProfileController@edit')->name('edit_profile');
 });
 //Employee Routes
 Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->group(function () {
