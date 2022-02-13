@@ -29,6 +29,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     //Profile Route
     Route::get('/profile', 'AdminProfileController@view')->name('profile');
     Route::match(['get', 'post'], '/edit-profile', 'AdminProfileController@edit')->name('edit_profile');
+    Route::post('/change-profile-image', 'AdminProfileController@changeProfile')->name('change_profile_image');
 });
 //Employee Routes
 Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->group(function () {
