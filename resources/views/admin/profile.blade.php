@@ -22,7 +22,7 @@
                             <!--begin::User-->
                             <div>
                                 <div class="image-input" id="kt_image_4" style="background-image: url(assets/media/users/blank.png)">
-                                    <div class="image-input-wrapper" style="background-image: url({{ ($user->image == NULL) ? asset("./files/profile_pics/pp.jpg") : $user->image}})"></div>
+                                    <div class="image-input-wrapper" style="background-image: url({{ ($user->image == NULL) ? asset("./files/profile_pics/pp.jpg") :  asset("files/profile_pics/".$user->image)}})"></div>
                                </div>
 
                             </div>

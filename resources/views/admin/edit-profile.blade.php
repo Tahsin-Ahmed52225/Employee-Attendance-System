@@ -138,7 +138,7 @@
                             <div class="card-title w-100 justify-content-between">
                                     <div class="float-left">   <h3 class="card-label font-weight-bolder text-dark">Account Information</h3> </div>
                                     <div>
-                                        <a href="{{ route("admin.profile") }}"> <button class="btn btn-sm btn-light ">Back to Profile</button> </a>
+                                        <a href="{{ route("admin.profile") }}"> <button type="button" class="btn btn-sm btn-light ">Back to Profile</button> </a>
                                         <button id="update_profile" class="btn btn-sm btn-primary">Update Info</button>
                                     </div>
                             </div>
