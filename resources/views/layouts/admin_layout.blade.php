@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+
 		<!--end::Fonts-->
         @yield("links")
 		<!--begin::Global Theme Styles(used by all pages)-->
@@ -22,6 +23,7 @@
 		<link href="{{ asset("assets/css/themes/layout/aside/dark.css") }}" rel="stylesheet" type="text/css" />
 		<!--end::Layout Themes-->
 		<link rel="shortcut icon" href="{{ asset("assets/media/logos/favicon.png") }}" />
+        <script src="{{asset('dev-assets/js/timer.js')}}" type="text/javascript" charset="utf-8" async defer></script>
 
 
 	</head>
@@ -76,7 +78,7 @@
 					<div class="brand flex-column-auto" id="kt_brand">
 						<!--begin::Logo-->
 						<a href="/" class="brand-logo">
-							<img  style="height:145px; margin-top:7px;" alt="Logo" src="{{ asset("assets/media/logos/logo-light.png") }}" />
+							<img  style="height:200px;" alt="Logo" src="{{ asset("assets/media/logos/logo.png") }}" />
 						</a>
 						<!--end::Logo-->
 						<!--begin::Toggle-->
@@ -97,6 +99,7 @@
 					</div>
 					<!--end::Brand-->
 					<!--begin::Aside Menu-->
+                    <span id="time_title" class="ml-3" style="color:white; font-size:30px;text-align:center"></span></a>
 					<div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
 						<!--begin::Menu Container-->
 						<div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
@@ -119,7 +122,7 @@
 									</a>
 								</li>
 								<li class="menu-section">
-									<h4 class="menu-text">Empolyee</h4>
+									<h4 class="menu-text">Applications</h4>
 									<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 								</li>
 								<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -786,7 +789,7 @@
 				<!--begin::Header-->
 				<div class="d-flex align-items-center mt-5">
 					<div class="symbol symbol-100 mr-5">
-						<div class="symbol-label" style="background-image:url('{{ ($user->image == NULL) ? asset("./files/profile_pics/pp.jpg") :  asset("files/profile_pics/".$user->image)}}  ')"></div>
+						<div class="symbol-label" style="background-image:url('{{ (Auth::user()->image == NULL) ? asset("./files/profile_pics/pp.jpg") :  asset("files/profile_pics/".Auth::user()->image)}}  ')"></div>
 						<i class="symbol-badge bg-success"></i>
 					</div>
 					<div class="d-flex flex-column">

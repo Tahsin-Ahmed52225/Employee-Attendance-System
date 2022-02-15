@@ -32,6 +32,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/change-profile-image', 'AdminProfileController@changeProfile')->name('change_profile_image');
     //App:In & Out
     Route::match(['get', 'post'], '/in-and-out', 'TimerController@view')->name('in_and_out');
+    Route::post('/check-in', 'TimerController@checkIn')->name('check_out');
+    Route::post('/check-out', 'TimerController@checkOut')->name('check_in');
 });
 //Employee Routes
 Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->group(function () {

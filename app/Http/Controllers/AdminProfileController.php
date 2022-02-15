@@ -8,6 +8,11 @@ use PhpParser\Node\Expr\FuncCall;
 
 class AdminProfileController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function view(Request $request)
     {
         if ($request->isMethod("GET")) {
@@ -15,6 +20,11 @@ class AdminProfileController extends Controller
             return view("admin.profile", ['user' => $user]);
         }
     }
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function edit(Request $request)
     {
         if ($request->isMethod("GET")) {
@@ -36,6 +46,11 @@ class AdminProfileController extends Controller
             return redirect()->back()->with("rejected", "Something went wrong ! Try again");
         }
     }
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function changeProfile(Request $request)
     {
         if ($request->isMethod("POST")) {
