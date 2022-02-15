@@ -44,7 +44,7 @@
             </div>
             <!-- check in modal starts  -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Description</h5>
@@ -55,8 +55,13 @@
                 <div class="modal-body">
                     <form  class="was-validated">
                         <div class="mb-3">
-                            <label for="validationTextarea">Please enter your description</label>
-                            <textarea id='timer_description' class="form-control is-invalid" id="validationTextarea" placeholder="Enter Description..." required></textarea>
+                            <textarea id="kt-tinymce-3" name="description" class="tox-target @error('details') is-invalid @enderror" placeholder="message" required>
+                            </textarea>
+                                @error('details')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 
                         </div>
                     </form>
@@ -133,8 +138,36 @@
 
 
 @section('scripts')
-<script src={{ asset("dev-assets/js/timer.js") }}></script>
-<script>
 
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.0/tinymce.min.js" ></script>
+    <script>
+// Class definition
+
+var KTTinymce = function () {
+        // Private functions
+        var demos = function () {
+            tinymce.init({
+                selector: '#kt-tinymce-3',
+                menubar: false,
+                toolbar: ['styleselect fontselect fontsizeselect',
+                    'undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify',
+                    'bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview '],
+                plugins : 'advlist autolink link  lists charmap print preview'
+            });
+        }
+
+        return {
+            // public functions
+            init: function() {
+                demos();
+            }
+        };
+    }();
+
+    // Initialization
+    jQuery(document).ready(function() {
+        KTTinymce.init();
+    });
+    </script>
+    <script src={{ asset("dev-assets/js/timer.js") }}></script>
 @endsection

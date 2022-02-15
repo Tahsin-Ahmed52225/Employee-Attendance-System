@@ -18,7 +18,48 @@ class TimerController extends Controller
     }
     public function checkIn(Request $request)
     {
-        if ($request->isMethod("POST")) {
+        if ($request->ajax()) {
+            $check_id_checker = Timer::whereDate('check_in', now())->first();
+            if ($check_id_checker) {
+                $msg = "<div class='alert alert-warning fade show' role='alert'>"
+                    . "Already Checked In Today
+                          <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                          <span aria-hidden='true'>&times;</span>
+                        </button>
+                      </div>";
+
+                return response()->json(array('msg' => $msg, 'stage' => false), 200);
+            } else {
+                Timer::create([
+
+                    'user_id' => auth()->id(),
+
+                    'check_in' => now(),
+
+                    'check_out' => null,
+
+                    'total_time' => null,
+
+                ]);
+
+                $msg = "<div class='alert alert-success fade show' role='alert'>"
+                    . "Checked in Successfully
+                              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                              <span aria-hidden='true'>&times;</span>
+                            </button>
+                          </div>";
+
+                return response()->json(array('msg' => $msg, 'stage' => true), 200);
+            }
+        } else {
+            $msg = "<div class='alert alert-danger fade show' role='alert'>"
+                . "Somthing went wrong
+                          <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                          <span aria-hidden='true'>&times;</span>
+                        </button>
+                      </div>";
+
+            return response()->json(array('msg' => $msg, 'stage' => false), 200);
         }
     }
     public function checkOut(Request $request)
@@ -31,30 +72,49 @@ class TimerController extends Controller
                           <span aria-hidden='true'>&times;</span>
                         </button>
                       </div>";
+                return response()->json(array('msg' => $msg, 'stage' => false), 200);
             } else {
-                $new_count = Timer::create([
-
-                    'user_id' => auth()->id(),
-
-                    'check_in' => $request->description,
-
-                    'check_out' => (int) $request->hr,
-
-                    'total_time' => (int) $request->min,
-
-                ]);
-
-
-                $msg = "<div class='alert alert-success fade show' role='alert'>"
-                    . $request->hr . " Hour " . $request->min . " Min added to today
+                $timer = Timer::whereDate('check_in', now())->first();
+                if ($timer && $timer->check_out == null) {
+                    if ($request->description != "") {
+                        $timer->check_out = now();
+                        $timer->total_time = $timer->check_out->diffInMinutes($timer->check_in);
+                        $timer->daily_update = $request->description;
+                        $timer->save();
+                        $msg = "<div class='alert alert-success fade show' role='alert'>"
+                            . $request->hr . " Hour " . $request->min . " Min added to today
+                              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                              <span aria-hidden='true'>&times;</span>
+                            </button>
+                          </div>";
+                        return response()->json(array('msg' => $msg, 'stage' => true), 200);
+                    } else {
+                        $msg = "<div class='alert alert-warning fade show' role='alert'>"
+                            .  " Daily Update is required
                           <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                           <span aria-hidden='true'>&times;</span>
                         </button>
                       </div>";
+                        return response()->json(array('msg' => $msg, 'stage' => false), 200);
+                    }
+                } else {
+                    $msg = "<div class='alert alert-warning fade show' role='alert'>"
+                        . " You have to check in first
+                      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                  </div>";
+                    return response()->json(array('msg' => $msg, 'stage' => false), 200);
+                }
             }
-            return response()->json(array('msg' => $msg), 200);
         } else {
-            return redirect()->route('tdg.dashboard');
+            $msg = "<div class='alert alert-danger fade show' role='alert'>"
+                . " Something went wrong
+                      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                      <span aria-hidden='true'>&times;</span>
+                    </button>
+                  </div>";
+            return response()->json(array('msg' => $msg, 'stage' => false), 200);
         }
     }
 }

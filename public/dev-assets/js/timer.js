@@ -1,16 +1,42 @@
-window.addEventListener('load', function () {
+window.onload = function () {
     function checkin() {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: '/admin/check-in',
+            success: function (data) {
+                document.getElementById("time_msg").innerHTML = data.msg;
+                $("#time_msg").slideDown(500);
+                $("#time_msg").delay(1000).slideUp(500);
+                if (data.stage) {
+                    localStorage.setItem('start_button', 'clicked');
+                    $("#start_button").prop("disabled", true);
+                    $("#start_button").removeClass("btn-outline-success");
+                    $("#start_button").addClass("btn-light");
+                    start_button.innerHTML = "Running";
+                    timerCycle();
+                    document.getElementById("time_msg").innerHTML = "";
+                }
+            },
+            error: function (data) {
+                console.log("Error:");
+                console.log(data);
+            },
+        });
+
 
     }
 
-    function saveData(hr, min, sec, description) {
+    function checkOut(hr, min, sec, description) {
 
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'POST',
-            url: '/admin/in-and-out',
+            url: '/admin/check-out',
             data: {
 
                 'hr': hr,
@@ -21,10 +47,24 @@ window.addEventListener('load', function () {
             },
             success: function (data) {
                 document.getElementById("time_msg").innerHTML = data.msg;
-                $("#time_msg").slideDown(1000);
-                $("#time_msg").delay(3000).slideUp(1000);
+                $("#time_msg").slideDown(500);
+                $("#time_msg").delay(1000).slideUp(500);
+                if (data.stage) {
+                    localStorage.clear();
+                    timer.innerHTML = '00:00:00';
+                    //Stopping the cycle
+                    clearTimeout(cycle);
+                    hr = 0;
+                    min = 0;
+                    sec = 0;
+                    $("#start_button").prop("disabled", false);
+                    $("#start_button").addClass("btn-success");
+                    $("#start_button").removeClass("btn-light");
+                    start_button.innerHTML = "Check In";
+                    tinyMCE.get('kt-tinymce-3').setContent('');
+                }
             },
-            error: function (data, textStatus, errorThrown) {
+            error: function (data) {
                 console.log("Error:");
                 console.log(data);
 
@@ -43,7 +83,6 @@ window.addEventListener('load', function () {
     // console.log(timer.innerHTML);
 
     if (dashboard != null && localStorage.getItem('start_button') == null) {
-        // console.log("in Dashboard and start button not clicked");
         //Declaring variable
         var hr = 0;
         var min = 0;
@@ -54,7 +93,6 @@ window.addEventListener('load', function () {
         $("#start_button").removeClass("btn-outline-success");
         $("#start_button").addClass("btn-light");
         start_button.innerHTML = "Running";
-
     }
 
 
@@ -62,32 +100,12 @@ window.addEventListener('load', function () {
 
     if (start_button) {
         start_button.addEventListener('click', function () {
-            // console.log('start button working');
-            localStorage.setItem('start_button', 'clicked');
-            $("#start_button").prop("disabled", true);
-            $("#start_button").removeClass("btn-outline-success");
-            $("#start_button").addClass("btn-light");
-            start_button.innerHTML = "Running";
-            timerCycle();
-
+            checkin();
         })
     }
     if (stop_button) {
         stop_button.addEventListener('click', function () {
-            var description = document.getElementById("timer_description").value;
-            saveData(hr, min, sec, description);
-            localStorage.clear();
-            timer.innerHTML = '00:00:00';
-            //Stopping the cycle
-            clearTimeout(cycle);
-            hr = 0;
-            min = 0;
-            sec = 0;
-            $("#start_button").prop("disabled", false);
-            $("#start_button").addClass("btn-success");
-            $("#start_button").removeClass("btn-light");
-            start_button.innerHTML = "Start";
-
+            checkOut(hr, min, sec, tinyMCE.get('kt-tinymce-3').getContent());
 
         })
     }
@@ -153,4 +171,4 @@ window.addEventListener('load', function () {
     }
 
 
-})
+}
