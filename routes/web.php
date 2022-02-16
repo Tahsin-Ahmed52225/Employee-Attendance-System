@@ -15,6 +15,8 @@ Route::match(['get', 'post'], '/login', 'AuthController@tdgLogin')->name('login'
 Route::middleware('auth')->group(function () {
     ######Logout Route
     Route::get('/logout', 'AuthController@logout')->name("logout");
+    Route::post('/check-in', 'TimerController@checkIn')->name('check_in');
+    Route::post('/check-out', 'TimerController@checkOut')->name('check_out');
 });
 
 //Admin Routes
@@ -32,8 +34,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/change-profile-image', 'AdminProfileController@changeProfile')->name('change_profile_image');
     //App:In & Out
     Route::match(['get', 'post'], '/in-and-out', 'TimerController@view')->name('in_and_out');
-    Route::post('/check-in', 'TimerController@checkIn')->name('check_in');
-    Route::post('/check-out', 'TimerController@checkOut')->name('check_out');
 });
 //Employee Routes
 Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->group(function () {
@@ -41,4 +41,6 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::match(['get', 'post'], '/dashboard', 'EmployeeDashboardController@view')->name('dashboard');
     //Profile Route
     Route::match(['get', 'post'], '/profile', 'EmployeeProfileController@view')->name('profile');
+    Route::match(['get', 'post'], '/edit-profile', 'EmployeeProfileController@edit')->name('edit_profile');
+    Route::post('/change-profile-image', 'EmployeeProfileController@changeProfile')->name('change_profile_image');
 });

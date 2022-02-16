@@ -16,12 +16,14 @@
 		<link href="{{ asset("assets/css/style.bundle.css") }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Theme Styles-->
 		<!--begin::Layout Themes(used by all pages)-->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 		<link href="{{ asset("assets/css/themes/layout/header/base/light.css") }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset("assets/css/themes/layout/header/menu/light.css") }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset("assets/css/themes/layout/brand/dark.css") }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset("assets/css/themes/layout/aside/dark.css") }}" rel="stylesheet" type="text/css" />
 		<!--end::Layout Themes-->
 		<link rel="shortcut icon" href="{{ asset("assets/media/logos/favicon.png") }}" />
+        <script src="{{asset('dev-assets/js/timer.js')}}" type="text/javascript" charset="utf-8" async defer></script>
 
 
 	</head>
@@ -76,7 +78,7 @@
 					<div class="brand flex-column-auto" id="kt_brand">
 						<!--begin::Logo-->
 						<a href="/" class="brand-logo">
-							<img  style="height:145px; margin-top:7px;" alt="Logo" src="{{ asset("assets/media/logos/logo-light.png") }}" />
+							<img  style="height:200px; margin-top:7px;" alt="Logo" src="{{ asset("assets/media/logos/logo.png") }}" />
 						</a>
 						<!--end::Logo-->
 						<!--begin::Toggle-->
@@ -97,13 +99,14 @@
 					</div>
 					<!--end::Brand-->
 					<!--begin::Aside Menu-->
+                    <span id="time_title" class="ml-3" style="color:white; font-size:30px;text-align:center"></span></a>
 					<div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
 						<!--begin::Menu Container-->
 						<div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
 							<!--begin::Menu Nav-->
 							<ul class="menu-nav">
 								<li class="menu-item menu-item-active" aria-haspopup="true">
-									<a href="/admin/dashboard" class="menu-link">
+									<a href="/employee/dashboard" class="menu-link">
 										<span class="svg-icon menu-icon">
 											<!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
 											<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -609,7 +612,7 @@
 										<span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
 										<span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ Auth::user()->name }}</span>
 										<span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-											<span class="symbol-label font-size-h5 font-weight-bold">S</span>
+											<span class="symbol-label font-size-h5 font-weight-bold">{{ substr(Auth::user()->name, 0, 1) }}</span>
 										</span>
 									</div>
 								</div>
@@ -693,7 +696,7 @@
 				<!--begin::Header-->
 				<div class="d-flex align-items-center mt-5">
 					<div class="symbol symbol-100 mr-5">
-						<div class="symbol-label" style="background-image:url('{{ asset("assets/media/users/300_21.jpg") }}')"></div>
+						<div class="symbol-label" style="background-image:url('{{ (Auth::user()->image == NULL) ? asset("./files/profile_pics/pp.jpg") :  asset("files/profile_pics/".Auth::user()->image)}}  ')"></div>
 						<i class="symbol-badge bg-success"></i>
 					</div>
 					<div class="d-flex flex-column">

@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.employee_layout')
 @section("links")
 <!--begin::Page Vendors Styles(used by this page)-->
 <link href="{{ asset("assets/plugins/custom/fullcalendar/fullcalendar.bundle.css") }}" rel="stylesheet" type="text/css" />
@@ -57,7 +57,7 @@
                     <!--begin::Body-->
                     <div class="card-body">
                         <!--begin::User-->
-                        <form method="POST" action="{{ route("admin.change_profile_image") }}" enctype='multipart/form-data'>
+                        <form method="POST" action="{{ route("employee.change_profile_image") }}" enctype='multipart/form-data'>
                         @csrf
                         <div class="row">
                             <div class="col-6">

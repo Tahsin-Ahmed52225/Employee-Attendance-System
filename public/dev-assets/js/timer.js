@@ -5,7 +5,7 @@ window.onload = function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'POST',
-            url: '/admin/check-in',
+            url: '/check-in',
             success: function (data) {
                 document.getElementById("time_msg").innerHTML = data.msg;
                 $("#time_msg").slideDown(500);
@@ -36,7 +36,7 @@ window.onload = function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'POST',
-            url: '/admin/check-out',
+            url: '/check-out',
             data: {
 
                 'hr': hr,
