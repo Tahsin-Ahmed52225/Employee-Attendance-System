@@ -6,20 +6,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-//Login route
 Route::match(['get', 'post'], '/login', 'AuthController@tdgLogin')->name('login');
 
 
-//Authentication routes
-//Routes for Authenticated Users
+
+##############################################################   Auth Routes    ############################################################
+
 Route::middleware('auth')->group(function () {
     ######Logout Route
     Route::get('/logout', 'AuthController@logout')->name("logout");
+    //App:In & Out
     Route::post('/check-in', 'TimerController@checkIn')->name('check_in');
     Route::post('/check-out', 'TimerController@checkOut')->name('check_out');
 });
 
-//Admin Routes
+##############################################################   Admin Routes    ############################################################
+
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     //Dashboard Route
     Route::match(['get', 'post'], '/dashboard', 'AdminDashboardController@view')->name('dashboard');
@@ -34,8 +36,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/change-profile-image', 'AdminProfileController@changeProfile')->name('change_profile_image');
     //App:In & Out
     Route::match(['get', 'post'], '/in-and-out', 'TimerController@view')->name('in_and_out');
+    Route::get('/view-timesheet', 'TimesheetController@view')->name('view_timesheet');
 });
-//Employee Routes
+
+##############################################################   Employee Routes    ############################################################
+
 Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->group(function () {
     //Dashboard Route
     Route::match(['get', 'post'], '/dashboard', 'EmployeeDashboardController@view')->name('dashboard');

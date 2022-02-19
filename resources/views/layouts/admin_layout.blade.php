@@ -203,7 +203,7 @@
 												</a>
 											</li>
 											<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-												<a href="{{ route("admin.view_member") }}" class="menu-link menu-toggle">
+												<a href="{{ route("admin.view_timesheet") }}" class="menu-link menu-toggle">
 													<i class="menu-bullet menu-bullet-line">
 														<span></span>
 													</i>

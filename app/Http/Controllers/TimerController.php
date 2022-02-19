@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 //Models
 use App\Timer;
@@ -19,7 +20,7 @@ class TimerController extends Controller
     public function checkIn(Request $request)
     {
         if ($request->ajax()) {
-            $check_id_checker = Timer::whereDate('check_in', now())->first();
+            $check_id_checker = Timer::whereDate('check_in', now())->where('user_id', Auth::user()->id)->first();
             if ($check_id_checker) {
                 $msg = "<div class='alert alert-warning fade show' role='alert'>"
                     . "Already Checked In Today
@@ -74,7 +75,7 @@ class TimerController extends Controller
                       </div>";
                 return response()->json(array('msg' => $msg, 'stage' => false), 200);
             } else {
-                $timer = Timer::whereDate('check_in', now())->first();
+                $timer = Timer::whereDate('check_in', now())->where('user_id', Auth::user()->id)->first();
                 if ($timer && $timer->check_out == null) {
                     if ($request->description != "") {
                         $timer->check_out = now();
