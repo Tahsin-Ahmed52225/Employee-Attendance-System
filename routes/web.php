@@ -37,6 +37,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     //App:In & Out
     Route::match(['get', 'post'], '/in-and-out', 'TimerController@view')->name('in_and_out');
     Route::get('/view-timesheet', 'TimesheetController@view')->name('view_timesheet');
+    //App:Daily Report
+    Route::get('/daily-report', 'DailyReportController@view')->name('daily_report');
 });
 
 ##############################################################   Employee Routes    ############################################################

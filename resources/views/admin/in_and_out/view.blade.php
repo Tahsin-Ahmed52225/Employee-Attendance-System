@@ -61,7 +61,7 @@
                                 <tr>
                                     <th>Date</th>
                                     @foreach ($user as $elements)
-                                    <th>{{ explode(" ",$elements->name)[0]  }}</th>
+                                          <th>{{ explode(" ",$elements->name)[0]  }}</th>
                                     @endforeach
                                 </tr>
                             </thead>

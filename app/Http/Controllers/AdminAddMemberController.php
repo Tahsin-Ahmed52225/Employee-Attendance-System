@@ -16,7 +16,7 @@ class AdminAddMemberController extends Controller
     public function addMember(Request $request)
     {
         if ($request->isMethod("GET")) {
-            return view("admin.add-member");
+            return view("admin.employee.create");
         } else if ($request->isMethod("POST")) {
             $data['name'] = $request->tdg_name;
             $data['email'] = $request->tdg_email;
@@ -60,7 +60,7 @@ class AdminAddMemberController extends Controller
         if ($request->isMethod("GET")) {
             $users = User::where("role", "=", "employee")->get();
             //  dd($users);
-            return view('admin.view-member', ['users' => $users]);
+            return view('admin.employee.index', ['users' => $users]);
         } else if ($request->isMethod("POST")) {
         } else {
             return redirect("/");

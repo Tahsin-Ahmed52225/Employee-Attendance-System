@@ -15,7 +15,7 @@ class TimerController extends Controller
      */
     public function view()
     {
-        return view("admin.in_and_out.timer");
+        return view("admin.in_and_out.index");
     }
     public function checkIn(Request $request)
     {

@@ -8,6 +8,12 @@ class EmployeeDashboardController extends Controller
 {
     public function view()
     {
-        return view('employee.dashboard');
+        $ip = file_get_contents('https://api.my-ip.io/ip');
+        if ($ip == '203.76.222.138') {
+            $in_office = true;
+        } else {
+            $in_office = false;
+        }
+        return view('employee.dashboard', ['in_office' => $in_office]);
     }
 }

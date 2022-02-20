@@ -9,6 +9,7 @@
 <div class="content d-flex flex-column flex-column-fluid " id="kt_content">
     <div id="page_name" class="container">
         <div id="time_msg"></div>
+        @if($in_office)
         <div class="row">
             <div class="col-xl-6 col-md-12 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -121,6 +122,16 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-warning d-flex align-items-center justify-content-center" role="alert">
+                        <i class="flaticon-warning-sign text-white"></i>
+                        Connect with office network to check in !!
+                </div>
+            </div>
+        </div>
+        @endif
 
     </div>
 
