@@ -14,8 +14,8 @@ class TimesheetController extends Controller
     {
         if ($request->isMethod("GET")) {
 
-            $user = User::where('role', 'employee')->get('name');
-            return view("admin.in_and_out.view", ['user' => $user]);
+
+            return view("admin.in_and_out.view");
         }
     }
 }
