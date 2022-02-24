@@ -37,6 +37,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     //App:In & Out
     Route::match(['get', 'post'], '/in-and-out', 'TimerController@view')->name('in_and_out');
     Route::get('/view-timesheet', 'TimesheetController@view')->name('view_timesheet');
+    //App:Leave
+    Route::match(['get', 'post'], '/leave-request', 'AdminLeaveController@view')->name('leave_request');
     //App:Daily Report
     Route::get('/daily-report', 'DailyReportController@view')->name('daily_report');
 });
@@ -50,4 +52,6 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::match(['get', 'post'], '/profile', 'EmployeeProfileController@view')->name('profile');
     Route::match(['get', 'post'], '/edit-profile', 'EmployeeProfileController@edit')->name('edit_profile');
     Route::post('/change-profile-image', 'EmployeeProfileController@changeProfile')->name('change_profile_image');
+    //App:Leave
+    Route::match(['get', 'post'], '/leave-request', 'EmployeeLeaveController@index')->name('leave_request');
 });

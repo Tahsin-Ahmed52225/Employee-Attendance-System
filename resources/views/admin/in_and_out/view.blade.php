@@ -57,6 +57,7 @@
                         <!--begin: Datatable-->
                         <table class="table table-striped table-bordered" id="timesheetDatatable">
                             <thead>
+
                                 <tr>
                                     <th>Date</th>
                                     <th>Name</th>
@@ -64,19 +65,20 @@
                                     <th>Checked Out</th>
                                     <th>Total hour</th>
                                     <th>Status</th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>{{ $i }}</td>
-                                    <td>64616-103</td>
-                                    <td>Brazil</td>
-                                    <td>São Félix do Xingu</td>
-                                    <td>Brazil</td>
-                                    <td>São Félix do Xingu</td>
-                                </tr>
-
+                                @foreach ($timesheet as $item)
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::parse($item->check_in)->format('d M Y') }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->check_in)->format('h:i A') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->check_out)->format('h:i A') }}</td>
+                                        <td>{{ min_to_hour($item->total_time) }}
+                                        </td>
+                                        <td>São Félix do Xingu</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         <!--end: Datatable-->

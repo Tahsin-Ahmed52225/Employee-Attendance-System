@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 //Models
 use App\User;
+use App\Timer;
 
 class TimesheetController extends Controller
 {
@@ -14,8 +15,13 @@ class TimesheetController extends Controller
     {
         if ($request->isMethod("GET")) {
 
-
-            return view("admin.in_and_out.view");
+            $timesheet = Timer::where('check_out', '!=', null)
+                ->join('users', 'users.id', '=', 'timesheet.user_id')
+                ->where('users.role', '=', 'employee')
+                ->orderBy('timesheet.check_in', 'DESC')
+                ->get(['users.name', 'timesheet.check_in', 'timesheet.check_out', 'timesheet.total_time']);
+            //dd($timesheet);
+            return view("admin.in_and_out.view", ['timesheet' => $timesheet]);
         }
     }
 }
