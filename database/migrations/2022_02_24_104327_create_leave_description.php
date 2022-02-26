@@ -20,6 +20,7 @@ class CreateLeaveDescription extends Migration
             $table->date("leave_starting_date")->comment("Leave starting date");
             $table->date("leave_ending_date")->nullable()->comment("Leave ending date");
             $table->integer("leave_days")->comment('Leave days');
+            $table->string("leave_status")->comment("Leave status");
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

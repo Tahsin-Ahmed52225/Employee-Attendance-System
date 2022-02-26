@@ -70,4 +70,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Timer');
     }
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    public function OfficeLeave()
+    {
+        return $this->hasMany('App\OfficeLeave');
+    }
 }
