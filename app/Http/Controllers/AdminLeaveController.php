@@ -5,14 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //
 use App\OfficeLeave;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class AdminLeaveController extends Controller
 {
+    /**
+     * Viewing all leave applications
+     *
+     * @return void
+     */
+    public function index(Request $request)
+    {
+
+        if ($request->isMethod("GET")) {
+            $leaves = OfficeLeave::where('leave_status', 'Pending')->orderBy('created_at', 'desc')->get();
+            return view("admin.leave.index", ['leaves' => $leaves]);
+        } else {
+            return redirect()->back()->with('warning', 'Something went wrong');
+        }
+    }
+    /**
+     * Updating singular leave applications
+     *
+     * @return void
+     */
+
+    public function update(Request $request, $id)
+    {
+        if ($request->isMethod("POST")) {
+            $leave = OfficeLeave::find(decrypt($id));
+            if ($leave) {
+                $leave->leave_status = $request->leave_status;
+                $leave->save();
+                return redirect()->back()->with('success', 'Response has been sent');
+            } else {
+                return redirect()->back()->with('warning', 'Something went wrong');
+            }
+        }
+    }
     public function view(Request $request)
     {
         if ($request->isMethod("GET")) {
-            $leaves = OfficeLeave::orderBy('created_at', 'desc')->get();
-            return view("admin.leave.index", ['leaves' => $leaves]);
+            // $leaves = OfficeLeave::where('leave_status', 'Pending')->orderBy('created_at', 'desc')->get();
+            return view("admin.leave.view");
         }
     }
 }

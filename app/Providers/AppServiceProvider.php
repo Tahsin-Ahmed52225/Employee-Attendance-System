@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Getting pending leave application number
+        view()->composer('admin.*', function ($view) {
+            $pending_leave_application_count = \App\OfficeLeave::where('leave_status', '=', 'Pending')->count();
+            $view->with('pending_leave_application_count', $pending_leave_application_count);
+        });
     }
 }

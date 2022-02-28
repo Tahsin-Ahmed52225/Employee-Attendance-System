@@ -82,7 +82,7 @@
 
             <div class="card card-custom mt-4">
                 <div class="card-body">
-                    <table class="table table-striped table-bordered" id="timesheetDatatable">
+                    <table class="table" id="timesheetDatatable">
                         <thead>
 
                             <tr>
@@ -95,7 +95,8 @@
                         </thead>
                         <tbody>
                             @foreach ($leaves as $value)
-                                <tr>
+                                <tr
+                                    style="background-color: @if ($value->leave_status == 'Pending') #FFF3CD @elseif($value->leave_status == 'declined') #F8D7DA @else #D4EDDA @endif ">
                                     <td> {{ \Carbon\Carbon::parse($value->check_in)->format('d M Y') }}</td>
                                     <td>{{ $value->leave_days }}</td>
                                     <td>{{ $value->leave_description }}</td>
