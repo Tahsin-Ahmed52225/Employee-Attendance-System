@@ -1,10 +1,7 @@
 @extends('layouts.employee_layout')
 
 @section('links')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="{{ asset('dev-assets/css/datatable.css') }}">
 @endsection
-
 
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -94,7 +91,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($leaves as $value)
+                            {{-- @foreach ($leaves as $value)
                                 <tr
                                     style="background-color: @if ($value->leave_status == 'Pending') #FFF3CD @elseif($value->leave_status == 'declined') #F8D7DA @else #D4EDDA @endif ">
                                     <td> {{ \Carbon\Carbon::parse($value->check_in)->format('d M Y') }}</td>
@@ -102,7 +99,7 @@
                                     <td>{{ $value->leave_description }}</td>
                                     <td style="text-transform: capitalize;">{{ $value->leave_status }}</td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
 
@@ -114,15 +111,5 @@
     </div>
 @endsection
 
-
-
-
 @section('scripts')
-    <script src="{{ asset('dev-assets/js/leave_application.js') }}"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#timesheetDatatable').DataTable();
-        });
-    </script>
 @endsection

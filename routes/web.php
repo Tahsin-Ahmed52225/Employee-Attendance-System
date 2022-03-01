@@ -41,6 +41,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::match(['get', 'post'], '/leave-list', 'AdminLeaveController@view')->name('leave_list');
     Route::get('/leave-request', 'AdminLeaveController@index')->name('leave_request');
     Route::post('/leave-request/{id}', 'AdminLeaveController@update')->name('leave_request_update');
+    //App:Home Office
+    Route::match(['get', 'post'], '/home-office-list', 'AdminHomeOfficeController@view')->name('ho_list');
+    Route::get('/home-office-request', 'AdminHomeOfficeController@index')->name('ho_request');
+    Route::post('/home-office-request/{id}', 'AdminHomeOfficeController@update')->name('ho_request_update');
+
     //App:Daily Report
     Route::get('/daily-report', 'DailyReportController@view')->name('daily_report');
 });
@@ -56,4 +61,6 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::post('/change-profile-image', 'EmployeeProfileController@changeProfile')->name('change_profile_image');
     //App:Leave
     Route::match(['get', 'post'], '/leave-request', 'EmployeeLeaveController@index')->name('leave_request');
+    //App:Home Office
+    Route::match(['get', 'post'], '/home-office', 'EmployeeHomeOfficeController@index')->name('ho_request');
 });

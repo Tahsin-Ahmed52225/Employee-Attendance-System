@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//
+
+//Custom models
 use App\OfficeLeave;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
+use App\User;
 
 class AdminLeaveController extends Controller
 {
@@ -46,7 +47,9 @@ class AdminLeaveController extends Controller
     public function view(Request $request)
     {
         if ($request->isMethod("GET")) {
-            // $leaves = OfficeLeave::where('leave_status', 'Pending')->orderBy('created_at', 'desc')->get();
+            $user = User::where("role", "!=", "admin")->get();
+            dd($user);
+
             return view("admin.leave.view");
         }
     }
