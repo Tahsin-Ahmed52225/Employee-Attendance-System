@@ -345,9 +345,9 @@
                                                     <span></span>
                                                 </i>
                                                 <span class="menu-text">App : HO Request
-                                                    @if ($pending_leave_application_count > 0)
+                                                    @if ($pending_ho_application_count > 0)
                                                         <span
-                                                            class="m-2 badge rounded-pill bg-danger text-white">{{ $pending_leave_application_count }}</span>
+                                                            class="m-2 badge rounded-pill bg-danger text-white">{{ $pending_ho_application_count }}</span>
                                                     @endif
                                                 </span>
 

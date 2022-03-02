@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 
 //Custom models
 use App\HomeOffice;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeHomeOfficeController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->isMethod("GET")) {
-            return view("employee.home_office.index");
+            $employee_HO = HomeOffice::where('user_id', Auth::user()->id)->get();
+            return view("employee.home_office.index", ['home_offices' => $employee_HO]);
         } else if ($request->isMethod("POST")) {
 
             if ($request->number_of_days == 1) {
@@ -28,11 +30,11 @@ class EmployeeHomeOfficeController extends Controller
                 }
                 $leave_request = HomeOffice::create([
                     'user_id' => auth()->user()->id,
-                    'leave_description' => $request->reason,
-                    'leave_starting_date' => $request->starting_date,
-                    'leave_ending_date' => $request->ending_date,
-                    'leave_days' => $request->number_of_days,
-                    'leave_status' => 'Pending',
+                    'ho_description' => $request->reason,
+                    'ho_starting_date' => $request->starting_date,
+                    'ho_ending_date' => $request->ending_date,
+                    'ho_days' => $request->number_of_days,
+                    'ho_status' => 'Pending',
 
                 ]);
                 if ($leave_request) {

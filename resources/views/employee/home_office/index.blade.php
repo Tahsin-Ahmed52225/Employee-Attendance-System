@@ -1,6 +1,7 @@
 @extends('layouts.employee_layout')
 
 @section('links')
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 @endsection
 
 @section('content')
@@ -44,7 +45,7 @@
             @endif
             <div class="card">
                 <!--begin::Form-->
-                <form method="POST" action="{{ route('employee.leave_request') }}">
+                <form method="POST" action="{{ route('employee.ho_request') }}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -70,7 +71,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary mr-2">Leave Request</button>
+                        <button type="submit" class="btn btn-primary mr-2">HO Request</button>
                     </div>
                 </form>
                 <!--end::Form-->
@@ -91,15 +92,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($leaves as $value)
+                            @foreach ($home_offices as $value)
                                 <tr
-                                    style="background-color: @if ($value->leave_status == 'Pending') #FFF3CD @elseif($value->leave_status == 'declined') #F8D7DA @else #D4EDDA @endif ">
-                                    <td> {{ \Carbon\Carbon::parse($value->check_in)->format('d M Y') }}</td>
-                                    <td>{{ $value->leave_days }}</td>
-                                    <td>{{ $value->leave_description }}</td>
-                                    <td style="text-transform: capitalize;">{{ $value->leave_status }}</td>
+                                    style="background-color: @if ($value->ho_status == 'Pending') #FFF3CD @elseif($value->ho_status == 'declined') #F8D7DA @else #D4EDDA @endif ">
+                                    <td> {{ \Carbon\Carbon::parse($value->created_at)->format('d M Y') }}</td>
+                                    <td>{{ $value->ho_days }}</td>
+                                    <td>{{ $value->ho_description }}</td>
+                                    <td style="text-transform: capitalize;">{{ $value->ho_status }}</td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -112,4 +113,11 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('dev-assets/js/leave_application.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#timesheetDatatable').DataTable();
+        });
+    </script>
 @endsection

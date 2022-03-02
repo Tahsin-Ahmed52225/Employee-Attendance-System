@@ -32,8 +32,6 @@ function minForLeave() {
     $('#ending_date input').attr('min', tomorrow);
 }
 window.onload = (event) => {
-
-
     $("#number_of_days").on("keyup", (event) => {
         if (event.target.value > 1) {
             $("#starting_date .col-form-label").text('From');
