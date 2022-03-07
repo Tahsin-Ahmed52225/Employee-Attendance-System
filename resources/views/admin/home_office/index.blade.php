@@ -74,7 +74,7 @@
 
 
 
-                                {{-- Leave details modal starts --}}
+                                {{-- Home Office  details modal starts --}}
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal{{ $value->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -94,18 +94,18 @@
                                             <div class="modal-body">
                                                 @if ($value->ho_ending_date == null)
                                                     <div>
-                                                        <b>Leave Date:</b> {{ $value->ho_starting_date }}
+                                                        <b>H.O Date:</b> {{ $value->ho_starting_date }}
                                                     </div>
                                                 @else
                                                     <div>
-                                                        <b>Leave :</b> {{ $value->ho_starting_date }} to
+                                                        <b>H.O From :</b> {{ $value->ho_starting_date }} to
                                                         {{ $value->ho_ending_date }}
                                                     </div>
                                                 @endif
                                                 <div>
                                                     <b>Days :</b> {{ $value->ho_days }}
                                                 </div>
-                                                <div> <b>Leave Describtion: </b><br>
+                                                <div> <b>H.O Describtion: </b><br>
                                                     {{ $value->ho_description }}
                                                 </div>
 
@@ -113,11 +113,10 @@
                                             <div class="modal-footer ">
                                                 {{-- Accept or decline leave request --}}
                                                 <form method="POST"
-                                                    action="{{ route('admin.leave_request_update', encrypt($value->id)) }}"
+                                                    action="{{ route('admin.ho_request_update', encrypt($value->id)) }}"
                                                     class="row">
                                                     @csrf
-                                                    <select class="form-control col" id="exampleSelectl"
-                                                        name="leave_status">
+                                                    <select class="form-control col" id="exampleSelectl" name="ho_status">
                                                         <option> - </option>
                                                         <option value="accepted">Accept</option>
                                                         <option value="declined">Decline</option>

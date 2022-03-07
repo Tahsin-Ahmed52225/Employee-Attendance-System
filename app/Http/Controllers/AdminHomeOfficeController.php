@@ -8,6 +8,12 @@ use App\HomeOffice;
 
 class AdminHomeOfficeController extends Controller
 {
+    /**
+     * View all the (Pending) Home Office applications
+     *
+     * @return view admin.home_office.index
+     */
+
     public function index(Request $request)
     {
         if ($request->isMethod("GET")) {
@@ -15,13 +21,33 @@ class AdminHomeOfficeController extends Controller
             return view("admin.home_office.index", ['home_office_records' => $home_office_records]);
         }
     }
+    /**
+     * View all the Home Office applications by user
+     *
+     * @return view admin.home_office.view
+     */
     public function view(Request $request)
     {
         if ($request->isMethod("GET")) {
             return view("admin.home_office.view");
         }
     }
-    public function update()
+    /**
+     * Accept and Reject Home Office applications
+     *
+     * @return view admin.home_office.index with success or warning message
+     */
+    public function update(Request $request, $id)
     {
+        if ($request->isMethod("POST")) {
+            $ho = HomeOffice::find(decrypt($id));
+            if ($ho) {
+                $ho->ho_status = $request->ho_status;
+                $ho->save();
+                return redirect()->back()->with('success', 'Response has been sent');
+            } else {
+                return redirect()->back()->with('warning', 'Something went wrong');
+            }
+        }
     }
 }

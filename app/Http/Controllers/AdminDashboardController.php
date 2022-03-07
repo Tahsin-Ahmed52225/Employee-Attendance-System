@@ -14,10 +14,24 @@ class AdminDashboardController extends Controller
     {
         if ($request->isMethod("GET")) {
 
-            $employee_online = \App\Timer::where('created_at', '=', now())->count();
+            $employee_checked_in = Timer::whereDate('timesheet.created_at', '=', now())
+                ->where('timesheet.check_out', '=', null)
+                ->join('users', 'users.id', '=', 'timesheet.user_id')
+                ->get(['users.name', 'users.position', 'users.id', 'users.image']);
+
+            $employee_checked_out = Timer::whereDate('timesheet.created_at', '=', now())
+                ->where('timesheet.check_out', '!=', null)
+                ->join('users', 'users.id', '=', 'timesheet.user_id')
+                ->get(['users.name', 'users.position', 'users.id', 'users.image']);
+
+
+
+
+
+            //dd($employee_online);
             // $employee_HO = \App\HomeOffice::where('ho_status', 'Pending')->count();
             // $employee_leave = \App\OfficeLeave::where('leave_status', 'Pending')->count();
-            return view("admin.dashboard");
+            return view("admin.dashboard", ['employee_checked_in' => $employee_checked_in, 'employee_checked_out' => $employee_checked_out]);
         }
     }
 }
