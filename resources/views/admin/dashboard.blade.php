@@ -51,8 +51,6 @@
                                 </div>
 
                                 {{-- Employee Card Ends --}}
-
-
                             </div>
                         </div>
 
