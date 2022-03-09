@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 //Models
-use App\User;
 use App\Timer;
 
 class TimesheetController extends Controller

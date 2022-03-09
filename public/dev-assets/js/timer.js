@@ -18,6 +18,7 @@ window.onload = function () {
                     start_button.innerHTML = "Running";
                     timerCycle();
                     document.getElementById("time_msg").innerHTML = "";
+                    $("#end_button").prop("disabled", false);
                 }
             },
             error: function (data) {
@@ -30,7 +31,8 @@ window.onload = function () {
     }
 
     function checkOut(hr, min, sec, description) {
-
+        var type = document.getElementById("timer_label").innerText;
+        console.log(type);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -43,6 +45,7 @@ window.onload = function () {
                 'min': min,
                 'sec': sec,
                 'description': description,
+                'type': type,
 
             },
             success: function (data) {
@@ -62,6 +65,7 @@ window.onload = function () {
                     $("#start_button").removeClass("btn-light");
                     start_button.innerHTML = "Check In";
                     tinyMCE.get('kt-tinymce-3').setContent('');
+                    $("#end_button").prop("disabled", true);
                 }
             },
             error: function (data) {

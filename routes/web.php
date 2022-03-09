@@ -47,7 +47,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/home-office-request/{id}', 'AdminHomeOfficeController@update')->name('ho_request_update');
 
     //App:Daily Report
-    Route::get('/daily-report', 'DailyReportController@view')->name('daily_report');
+    Route::get('/daily-report', 'AdminDailyUpdateController@index')->name('daily_report');
 });
 
 ##############################################################   Employee Routes    ############################################################
@@ -63,4 +63,6 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::match(['get', 'post'], '/leave-request', 'EmployeeLeaveController@index')->name('leave_request');
     //App:Home Office
     Route::match(['get', 'post'], '/home-office', 'EmployeeHomeOfficeController@index')->name('ho_request');
+    //App:Daily Update
+    Route::match(['get', 'post'], '/daily-update', 'EmployeeDailyUpdateController@index')->name('daily_update');
 });

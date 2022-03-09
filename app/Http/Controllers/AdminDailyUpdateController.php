@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Timer;
 use Illuminate\Http\Request;
 
-class DailyReportController extends Controller
+//Custom Models
+use App\Timer;
+
+class AdminDailyUpdateController extends Controller
 {
-    public function view(Request $request)
+    public function index(Request $request)
     {
         if ($request->isMethod("GET")) {
             $updates = Timer::join("users", "users.id", "=", "timesheet.user_id")

@@ -13,6 +13,12 @@ use App\User;
 
 class AdminAddMemberController extends Controller
 {
+    /**
+     * Addning a new member
+     *
+     * @return \Illuminate\Http\Response
+     */
+
     public function addMember(Request $request)
     {
         if ($request->isMethod("GET")) {
@@ -55,6 +61,11 @@ class AdminAddMemberController extends Controller
             return redirect('/');
         }
     }
+    /**
+     * View all members in the system
+     *
+     * @return view(admin.employee.view)
+     */
     public function viewMember(Request $request)
     {
         if ($request->isMethod("GET")) {
@@ -66,6 +77,11 @@ class AdminAddMemberController extends Controller
             return redirect("/");
         }
     }
+    /**
+     * Delete a member
+     *
+     * @return response
+     */
     public function deleteMember(Request $request)
     {
         if ($request->ajax()) {
@@ -80,6 +96,11 @@ class AdminAddMemberController extends Controller
             }
         }
     }
+    /**
+     * Update a member
+     *
+     * @return response
+     */
     public function updateMember(Request $request)
     {
         if ($request->ajax()) {
