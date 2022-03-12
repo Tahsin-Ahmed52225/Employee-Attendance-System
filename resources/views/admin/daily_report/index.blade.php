@@ -11,22 +11,14 @@
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
             <div class="container-fluid">
-                @foreach ($updates as $item)
-                    <div class="card card-custom gutter-b">
-                        <div class="card-body">
-                            <div style="font-size:12px; font-weight:700;">{{ $item->name }} -
-                                <span style="font-weight: 500;">
-                                    {{ \Carbon\Carbon::parse($item->check_out)->format('d M Y') }} at
-                                    {{ \Carbon\Carbon::parse($item->check_out)->format('h:i') }}
-                                </span>
+                <div class="card p-2" style="height:78vh; overflow-y:scroll;">
+                    @include('admin.daily_report.data')
+                </div>
 
-                            </div>
-                            <div style="font-size:12px;">
-                                {!! $item->daily_update !!}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                <div class="ajax-load text-center" style="display: none;">
+                    <p><img src="{{ asset('images/loader.gif') }}">Loading More</p>
+                </div>
+
 
             </div>
         </div>
@@ -36,4 +28,35 @@
 @section('scripts')
     <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
+    <script>
+        function loadMoreData(page) {
+            $ajax({
+                    url: '?page=' + page,
+                    type: "get",
+                    datatype: "html",
+                    beforeSend: function() {
+                        $('.ajax-load').show();
+                    }
+
+                }).done(function() {
+                    if (data.html == " ") {
+                        $('.ajax-load').html("No more records found");
+                        return;
+                    }
+                    $('.ajax-load').hide();
+                    $('post_data').append(data.html);
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError) {
+                    alert('No response from server');
+                })
+
+            var page = 1;
+            $("window").scroll(function() {
+                if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                    page++;
+                    loadMoreData(page);
+                }
+            });
+        }
+    </script>
 @endsection
