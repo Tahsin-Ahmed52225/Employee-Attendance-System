@@ -15,13 +15,16 @@ class AdminDashboardController extends Controller
         if ($request->isMethod("GET")) {
 
             $employee_checked_in = Timer::whereDate('timesheet.created_at', '=', now())
+
                 ->where('timesheet.check_out', '=', null)
                 ->join('users', 'users.id', '=', 'timesheet.user_id')
+                ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
 
             $employee_checked_out = Timer::whereDate('timesheet.created_at', '=', now())
                 ->where('timesheet.check_out', '!=', null)
                 ->join('users', 'users.id', '=', 'timesheet.user_id')
+                ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
 
 

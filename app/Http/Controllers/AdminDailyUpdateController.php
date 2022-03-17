@@ -11,15 +11,20 @@ class AdminDailyUpdateController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->isMethod("GET")) {
-            $updates = Timer::join("users", "users.id", "=", "timesheet.user_id")
-                ->where('users.role', '!=', 'admin')
-                ->orderBy('timesheet.check_out', 'desc')
-                ->get(['users.name', 'timesheet.check_out', 'timesheet.daily_update']);
-            //dd($updates);
-            return view("admin.daily_report.index", [
-                "updates" => $updates
-            ]);
+
+        $updates = Timer::join("users", "users.id", "=", "timesheet.user_id")
+            ->where('users.role', '!=', 'admin')
+            ->orderBy('timesheet.check_out', 'desc')
+            ->paginate(9);
+        //Infinite scroll for pagination
+        if ($request->ajax()) {
+
+            $view =  view("admin.daily_report.data", compact('updates'))->render();
+            // dd(response()->json(['html' => $view]));
+            return response()->json(['html' => $view]);
         }
+        return view("admin.daily_report.index", [
+            "updates" => $updates
+        ]);
     }
 }

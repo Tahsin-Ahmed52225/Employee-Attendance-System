@@ -11,16 +11,14 @@
         <div class="d-flex flex-column-fluid">
             <!--begin::Container-->
             <div class="container-fluid">
-                <div class="card p-2" style="height:78vh; overflow-y:scroll;">
+                <div class="container" id="post_data">
                     @include('admin.daily_report.data')
                 </div>
-
-                <div class="ajax-load text-center" style="display: none;">
-                    <p><img src="{{ asset('images/loader.gif') }}">Loading More</p>
+                <div class="ajax-load text-center" style=" display: none;">
+                    <p><img style="height:100px;" src="{{ asset('images/loader.gif') }}">Loading More</p>
                 </div>
-
-
             </div>
+
         </div>
     </div>
 @endsection
@@ -30,7 +28,7 @@
     <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
     <script>
         function loadMoreData(page) {
-            $ajax({
+            $.ajax({
                     url: '?page=' + page,
                     type: "get",
                     datatype: "html",
@@ -38,25 +36,32 @@
                         $('.ajax-load').show();
                     }
 
-                }).done(function() {
-                    if (data.html == " ") {
-                        $('.ajax-load').html("No more records found");
+                }).done(function(data) {
+
+
+                    if (data.html === "" || data.html === " ") {
+                        $('.ajax-load').html('');
+                        $('.ajax-load').hide();
                         return;
+                    } else {
+
+                        $('#post_data').append(data.html);
+                        $('.ajax-load').hide();
                     }
-                    $('.ajax-load').hide();
-                    $('post_data').append(data.html);
                 })
                 .fail(function(jqXHR, ajaxOptions, thrownError) {
-                    alert('No response from server');
+                    //alert('No response from server');
+                    console.log(thrownError);
                 })
 
-            var page = 1;
-            $("window").scroll(function() {
-                if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-                    page++;
-                    loadMoreData(page);
-                }
-            });
+
         }
+        var page = 1;
+        $(document).scroll(function() {
+            if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                page++;
+                loadMoreData(page);
+            }
+        });
     </script>
 @endsection

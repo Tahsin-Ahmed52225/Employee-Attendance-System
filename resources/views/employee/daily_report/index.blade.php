@@ -1,67 +1,67 @@
-@extends("layouts.employee_layout")
-
+@extends('layouts.employee_layout')
 @section('links')
+    <!--begin::Page Vendors Styles(used by this page)-->
+    <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
+    <!--end::Page Vendors Styles-->
 @endsection
-
-
 @section('content')
-    <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-        <div class="container-fluid">
-            @if (session()->has('success'))
-                <div class="alert alert-custom alert-light-success fade show mb-5 d-flex py-2" role="alert">
-                    <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
-                    <div class="alert-text">{{ session()->get('success') }}
-                    </div>
-                    <div class="alert-close">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
-                        </button>
-                    </div>
+    <div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="padding-top:0px;">
+        <!--begin::Entry-->
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <div class="container" id="post_data">
+                    @include('employee.daily_report.data')
                 </div>
-            @endif
-            @if (session()->has('rejected'))
-                <div class="alert alert-custom alert-light-danger fade show mb-5 d-flex py-2" role="alert">
-                    <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
-                    <div class="alert-text">{{ session()->get('rejected') }}
-                    </div>
-                    <div class="alert-close">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
-                        </button>
-                    </div>
+                <div class="ajax-load text-center" style=" display: none;">
+                    <p><img style="height:100px;" src="{{ asset('images/loader.gif') }}">Loading More</p>
                 </div>
-            @endif
-            @if (session()->has('warning'))
-                <div class="alert alert-custom alert-light-warning fade show mb-5 d-flex py-2" role="alert">
-                    <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
-                    <div class="alert-text">{{ session()->get('warning') }}
-                    </div>
-                    <div class="alert-close">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
-                        </button>
-                    </div>
-                </div>
-            @endif
-            @foreach ($updates as $item)
-                <div class="card card-custom gutter-b">
-                    <div class="card-body">
-                        <div style="font-size:12px; font-weight:700;">{{ $item->name }} -
-                            <span style="font-weight: 500;">
-                                {{ \Carbon\Carbon::parse($item->check_out)->format('d M Y') }} at
-                                {{ \Carbon\Carbon::parse($item->check_out)->format('h:i') }}
-                            </span>
+            </div>
 
-                        </div>
-                        <div style="font-size:12px;">
-                            {!! $item->daily_update !!}
-                        </div>
-                    </div>
-                </div>
-            @endforeach
         </div>
     </div>
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
+    <script>
+        function loadMoreData(page) {
+            $.ajax({
+                    url: '?page=' + page,
+                    type: "get",
+                    datatype: "html",
+                    beforeSend: function() {
+                        $('.ajax-load').show();
+                    }
+
+                }).done(function(data) {
+
+
+                    if (data.html === "" || data.html === " ") {
+                        $('.ajax-load').html('');
+                        $('.ajax-load').hide();
+                        return;
+                    } else {
+
+                        $('#post_data').append(data.html);
+                        $('.ajax-load').hide();
+                    }
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError) {
+                    //alert('No response from server');
+                    console.log(thrownError);
+                })
+
+
+        }
+        var page = 1;
+        $(document).scroll(function() {
+            if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                page++;
+                loadMoreData(page);
+            }
+        });
+    </script>
 @endsection
