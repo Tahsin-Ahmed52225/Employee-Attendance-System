@@ -1,0 +1,11 @@
+.card-header {
+    padding: 1rem 2.25rem !important;
+}
+.card-body {
+    padding: 1rem 2.25rem !important;
+}
+
+.update_card:hover > .card-header,
+.update_card:hover > .card-body {
+    background-color: #f8f8f8 !important;
+}

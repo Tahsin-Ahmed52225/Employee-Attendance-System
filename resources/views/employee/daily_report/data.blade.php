@@ -1,13 +1,93 @@
 @foreach ($updates as $item)
-    <div class="card card-custom mb-2">
-        <div class="card-body">
-            <div style="font-size:12px; font-weight:700;">{{ $item->name }} -
-                <span style="font-weight: 500;">
-                    {{ \Carbon\Carbon::parse($item->check_out)->format('d M Y') }} at
-                    {{ \Carbon\Carbon::parse($item->check_out)->format('h:i') }}
-                </span>
+    <div class="card mb-2 update_card">
+        <div class="card-header ">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div style="font-size:12px; font-weight:700;">{{ $item->name }} -
+                        <span style="font-weight: 500;">
+                            {{ \Carbon\Carbon::parse($item->check_out)->format('d M Y') }} at
+                            {{ \Carbon\Carbon::parse($item->check_out)->format('h:i') }}
+                        </span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-toolbar float-right">
+                        <div class="dropdown dropdown-inline">
+                            <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="ki ki-bold-more-hor"></i>
+                            </a>
+                            <div class="dropdown-menu p-0 m-0 dropdown-menu-sm">
+                                <!--begin::Navigation-->
+                                <ul class="navi navi-hover">
+                                    <li class="navi-item" data-toggle="modal"
+                                        data-target="#exampleModalCenter{{ $item->id }}">
+                                        <a href="#" class="navi-link">
+                                            <i class="flaticon-edit mr-2"></i>
+                                            <span>Edit</span>
 
+
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link">
+                                            <i class="flaticon2-gear mr-2"></i>
+                                            <span>Settings</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--end::Navigation-->
+                            </div>
+                            {{-- Update Daily Update Starts --}}
+                            <div class="modal fade" id="exampleModalCenter{{ $item->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">
+                                                Description {{ $item->id }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="was-validated">
+                                                <div class="mb-3">
+                                                    <textarea id="kt-tinymce-3" name="description" class="tox-target @error('details') is-invalid @enderror"
+                                                        placeholder="message" required>
+                                                                                                                                                                                                                                                                                                                    </textarea>
+                                                    @error('details')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" id="timer_submit" class="btn btn-primary"
+                                                data-dismiss="modal">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Update Daily Update Ends --}}
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+
+
+
+        </div>
+        <div class="card-body">
+
             <div style="font-size:12px;">
                 {!! $item->daily_update !!}
             </div>

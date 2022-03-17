@@ -3,6 +3,7 @@
     <!--begin::Page Vendors Styles(used by this page)-->
     <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
         type="text/css" />
+    <link rel="stylesheet" href="{{ asset('dev-assets/css/daily_update.css') }}">
     <!--end::Page Vendors Styles-->
 @endsection
 @section('content')
@@ -62,6 +63,37 @@
                 page++;
                 loadMoreData(page);
             }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.0/tinymce.min.js"></script>
+    <script>
+        // Class definition
+
+        var KTTinymce = function() {
+            // Private functions
+            var demos = function() {
+                tinymce.init({
+                    selector: '#kt-tinymce-3',
+                    menubar: false,
+                    toolbar: ['styleselect fontselect fontsizeselect',
+                        'undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify',
+                        'bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview '
+                    ],
+                    plugins: 'advlist autolink link  lists charmap print preview'
+                });
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
+
+        // Initialization
+        jQuery(document).ready(function() {
+            KTTinymce.init();
         });
     </script>
 @endsection

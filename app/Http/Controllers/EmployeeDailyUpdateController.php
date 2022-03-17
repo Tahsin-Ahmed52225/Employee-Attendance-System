@@ -25,7 +25,7 @@ class EmployeeDailyUpdateController extends Controller
         //Infinite scroll for pagination
         if ($request->ajax()) {
 
-            $view =  view("admin.daily_report.data", compact('updates'))->render();
+            $view =  view("employee.daily_report.data", compact('updates'))->render();
             // dd(response()->json(['html' => $view]));
             return response()->json(['html' => $view]);
         }
