@@ -4,6 +4,7 @@
     <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
         type="text/css" />
     <link rel="stylesheet" href="{{ asset('dev-assets/css/daily_update.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.0/tinymce.min.js"></script>
     <!--end::Page Vendors Styles-->
 @endsection
 @section('content')
@@ -13,6 +14,42 @@
             <!--begin::Container-->
             <div class="container-fluid">
                 <div class="container" id="post_data">
+                    @if (session()->has('success'))
+                        <div class="alert alert-custom alert-light-success fade show mb-5 d-flex py-2" role="alert">
+                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                            <div class="alert-text">{{ session()->get('success') }}
+                            </div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
+                    @if (session()->has('rejected'))
+                        <div class="alert alert-custom alert-light-danger fade show mb-5 d-flex py-2" role="alert">
+                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                            <div class="alert-text">{{ session()->get('rejected') }}
+                            </div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
+                    @if (session()->has('warning'))
+                        <div class="alert alert-custom alert-light-warning fade show mb-5 d-flex py-2" role="alert">
+                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                            <div class="alert-text">{{ session()->get('warning') }}
+                            </div>
+                            <div class="alert-close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
                     @include('employee.daily_report.data')
                 </div>
                 <div class="ajax-load text-center" style=" display: none;">
@@ -27,6 +64,12 @@
 @section('scripts')
     <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
+    <script>
+        // Initialization
+        jQuery(document).ready(function() {
+            KTTinymce.init();
+        });
+    </script>
     <script>
         function loadMoreData(page) {
             $.ajax({
@@ -65,35 +108,11 @@
             }
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.0/tinymce.min.js"></script>
     <script>
-        // Class definition
-
-        var KTTinymce = function() {
-            // Private functions
-            var demos = function() {
-                tinymce.init({
-                    selector: '#kt-tinymce-3',
-                    menubar: false,
-                    toolbar: ['styleselect fontselect fontsizeselect',
-                        'undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify',
-                        'bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview '
-                    ],
-                    plugins: 'advlist autolink link  lists charmap print preview'
-                });
-            }
-
-            return {
-                // public functions
-                init: function() {
-                    demos();
-                }
-            };
-        }();
-
-        // Initialization
-        jQuery(document).ready(function() {
-            KTTinymce.init();
+        $(document).ready(function() {
+            $('.submit_btn').on("click", (e) => {
+                $(`#update_form` + e.target.getAttribute('data-id')).submit();
+            });
         });
     </script>
 @endsection

@@ -8,6 +8,11 @@
                             {{ \Carbon\Carbon::parse($item->check_out)->format('d M Y') }} at
                             {{ \Carbon\Carbon::parse($item->check_out)->format('h:i') }}
                         </span>
+                        <span>
+                            @if ($item->update_status)
+                                <span class="badge badge-pill badge-success">updated</span>
+                            @endif
+                        </span>
                     </div>
                 </div>
                 <div class="col">
@@ -45,18 +50,21 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLongTitle">
-                                                Description {{ $item->id }}</h5>
+                                                Update</h5>
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="was-validated">
+                                            <form class="was-validated" method="POST"
+                                                id="update_form{{ $item->id }}"
+                                                action="{{ route('employee.update_task', encrypt($item->id)) }}">
+                                                @csrf
                                                 <div class="mb-3">
-                                                    <textarea id="kt-tinymce-3" name="description" class="tox-target @error('details') is-invalid @enderror"
-                                                        placeholder="message" required>
-                                                                                                                                                                                                                                                                                                                    </textarea>
+                                                    <textarea class="kt-tinymce-3" name="description" placeholder="message" required>
+                                                        {{ $item->description }}
+                                                    </textarea>
                                                     @error('details')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -68,8 +76,8 @@
                                         </div>
                                         <div class="modal-footer">
 
-                                            <button type="button" id="timer_submit" class="btn btn-primary"
-                                                data-dismiss="modal">Update</button>
+                                            <button data-id={{ $item->id }} type="button"
+                                                class="btn btn-primary submit_btn" data-dismiss="modal">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -94,3 +102,33 @@
         </div>
     </div>
 @endforeach
+
+<script>
+    // Class definition
+
+    var KTTinymce = function() {
+        // Private functions
+        var demos = function() {
+            tinymce.init({
+                selector: '.kt-tinymce-3',
+                menubar: false,
+                toolbar: ['styleselect fontselect fontsizeselect',
+                    'undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify',
+                    'bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview '
+                ],
+                plugins: 'advlist autolink link  lists charmap print preview'
+            });
+        }
+
+        return {
+            // public functions
+            init: function() {
+                demos();
+            }
+        };
+    }();
+    // Initialization
+    jQuery(document).ready(function() {
+        KTTinymce.init();
+    });
+</script>

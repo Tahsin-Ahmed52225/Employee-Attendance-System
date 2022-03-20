@@ -49,7 +49,7 @@
                                         </div>
                                         <div class="row">
                                             <button id="end_button" class="clock_button btn btn-danger " data-toggle="modal"
-                                                disabled data-target="#exampleModalCenter" style="width:100px">Check
+                                                data-target="#exampleModalCenter" style="width:100px">Check
                                                 Out</button>
                                         </div>
 
@@ -74,8 +74,7 @@
                                 <div class="modal-body">
                                     <form class="was-validated">
                                         <div class="mb-3">
-                                            <textarea id="kt-tinymce-3" name="description"
-                                                class="tox-target @error('details') is-invalid @enderror"
+                                            <textarea id="kt-tinymce-3" name="description" class="tox-target @error('details') is-invalid @enderror"
                                                 placeholder="message" required>
                                                                                                                                                                                                                                                                                                                 </textarea>
                                             @error('details')

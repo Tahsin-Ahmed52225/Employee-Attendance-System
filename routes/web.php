@@ -65,4 +65,5 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::match(['get', 'post'], '/home-office', 'EmployeeHomeOfficeController@index')->name('ho_request');
     //App:Daily Update
     Route::match(['get', 'post'], '/daily-update', 'EmployeeDailyUpdateController@index')->name('daily_update');
+    Route::post('/update-daily-update/{id}', 'EmployeeDailyUpdateController@update')->name('update_task');
 });

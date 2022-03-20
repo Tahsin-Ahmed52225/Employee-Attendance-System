@@ -13,7 +13,7 @@ class Timer extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'check_in', 'check_out', 'total_time', 'status'
+        'user_id', 'check_in', 'check_out', 'total_time', 'status', 'update_status',
     ];
 
     public function User()

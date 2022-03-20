@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 //Custom Models
 use App\Timer;
@@ -18,10 +19,10 @@ class EmployeeDailyUpdateController extends Controller
     {
 
         $updates = Timer::where('user_id', auth()->id())
+            ->where('check_out', "!=", null)
             ->join("users", "users.id", "=", "timesheet.user_id")
             ->orderBy('timesheet.check_out', 'desc')
-            ->paginate(9);
-
+            ->paginate(9, ['users.name', 'timesheet.*']);
         //Infinite scroll for pagination
         if ($request->ajax()) {
 
@@ -31,5 +32,30 @@ class EmployeeDailyUpdateController extends Controller
         }
 
         return view("employee.daily_report.index", ['updates' => $updates]);
+    }
+    /**
+     * Update Daily Task
+     *
+     * @return
+     */
+    public function update(Request $request, $id)
+    {
+        if ($request->isMethod("POST")) {
+            $update = Timer::find(decrypt($id));
+            if ($update) {
+                if ($update->user_id == Auth::user()->id) {
+                    $update->daily_update = $request->description;
+                    $update->update_status = true;
+                    $update->save();
+                    return redirect()->back()->with('success', 'Updated Successfully');
+                } else {
+                    return redirect()->back()->with('warning', 'Unauthorized Access');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+        } else {
+            return redirect()->back();
+        }
     }
 }

@@ -21,6 +21,7 @@ class CreateTimesheet extends Migration
             $table->unsignedBigInteger('total_time')->comment("Total Time")->nullable();
             $table->longText('daily_update')->comment("User daily update")->nullable();
             $table->text("status")->comment("Status")->nullable();
+            $table->boolean("update_status")->comment("Update Status")->nullable();
             $table->timestamps();
 
 

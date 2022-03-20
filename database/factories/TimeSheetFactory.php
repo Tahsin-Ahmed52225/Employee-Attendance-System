@@ -14,5 +14,6 @@ $factory->define(Timer::class, function (Faker $faker) {
         'total_time' => $faker->randomDigitNotNull(),
         'daily_update' => $faker->paragraph,
         'status' => $faker->randomElement(['FD', 'HO']),
+        'update_status' => $faker->boolean,
     ];
 });

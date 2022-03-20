@@ -41,6 +41,8 @@ class TimerController extends Controller
 
                     'total_time' => null,
 
+                    'update_status' => false,
+
                 ]);
 
                 $msg = "<div class='alert alert-success fade show' role='alert'>"

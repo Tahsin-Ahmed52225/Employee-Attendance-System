@@ -6,6 +6,11 @@
                     {{ \Carbon\Carbon::parse($item->check_out)->format('d M Y') }} at
                     {{ \Carbon\Carbon::parse($item->check_out)->format('h:i') }}
                 </span>
+                <span>
+                    @if ($item->update_status)
+                        <span class="badge badge-pill badge-success">updated</span>
+                    @endif
+                </span>
 
             </div>
             <div style="font-size:12px;">
