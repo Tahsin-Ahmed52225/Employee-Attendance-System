@@ -118,9 +118,11 @@
                                                     @csrf
                                                     <select class="form-control col" id="exampleSelectl"
                                                         name="leave_status">
-                                                        <option> - </option>
+                                                        <option value="-"> - </option>
                                                         <option value="accepted">Accept</option>
                                                         <option value="declined">Decline</option>
+                                                        <option class="bg-danger text-white" value="delete">Delete Request
+                                                        </option>
 
                                                     </select>
                                                     <button type="type" class="btn btn-primary col-auto">

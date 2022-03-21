@@ -49,76 +49,34 @@
 
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-striped table-bordered" id="timesheetDatatable">
+                    <table class="table table-striped table-bordered " id="timesheetDatatable">
                         <thead>
 
-                            <tr>
+                            <tr class="text-center">
                                 <th>Name</th>
-                                <th>Total Leave</th>
-                                <th>In Month</th>
-                                <th>In Year</th>
-                                <th>In Quater</th>
+                                <th>Leave Date</th>
+                                <th>Number of Days</th>
+                                <th>Reason</th>
+                                <th>Status</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($leaves as $value)
-                                <tr data-toggle="modal" data-target="#exampleModal{{ $value->id }}">
+                            @foreach ($leave_list as $value)
+                                <tr class="text-center">
                                     <td>{{ $value->user->name }}</td>
-                                    <td> {{ \Carbon\Carbon::parse($value->created_at)->format('d M Y') }}</td>
+                                    <td> {{ \Carbon\Carbon::parse($value->leave_starting_date)->format('d M Y') }}
+                                        @if ($value->leave_days > 1)
+                                            -
+                                            {{ \Carbon\Carbon::parse($value->leave_ending_date)->format('d M Y') }}
+                                        @endif
+                                    </td>
                                     <td>{{ $value->leave_days }}</td>
                                     <td>{{ $value->leave_description }}</td>
-                                    <td> <span
-                                            class="badge badge-pill @if ($value->leave_status == 'accepted') badge-success @else badge-danger @endif">{{ $value->leave_status }}</span>
+                                    <td> <span class="badge badge-pill badge-success" style="text-transform:capitalize">
+                                            {{ $value->leave_status }}</span>
                                     </td>
                                 </tr>
-
-
-
-                                {{-- Leave details modal starts --}}
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal{{ $value->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <div class="modal-title" id="exampleModalLabel">Name:
-                                                    {{ $value->user->name }}
-                                                    <div style="font-size:14px; color:gray;">
-                                                        {{ $value->user->position }}
-                                                    </div>
-                                                </div>
-
-                                                <button type="button" class="btn text-light" data-dismiss="modal"
-                                                    aria-label="Close">X</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                @if ($value->leave_ending_date == null)
-                                                    <div>
-                                                        <b>Leave Date:</b> {{ $value->leave_starting_date }}
-                                                    </div>
-                                                @else
-                                                    <div>
-                                                        <b>Leave :</b> {{ $value->leave_starting_date }} to
-                                                        {{ $value->leave_ending_date }}
-                                                    </div>
-                                                @endif
-                                                <div>
-                                                    <b>Days :</b> {{ $value->leave_days }}
-                                                </div>
-                                                <div> <b>Leave Describtion: </b><br>
-                                                    {{ $value->leave_description }}
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer ">
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- Leave details modal end --}}
                             @endforeach
                         </tbody>
                     </table>

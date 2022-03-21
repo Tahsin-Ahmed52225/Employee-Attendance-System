@@ -29,7 +29,8 @@ class AdminHomeOfficeController extends Controller
     public function view(Request $request)
     {
         if ($request->isMethod("GET")) {
-            return view("admin.home_office.view");
+            $ho_list = HomeOffice::where('ho_status', 'accepted')->orderBy('created_at', 'desc')->get();
+            return view("admin.home_office.view", ['ho_list' => $ho_list]);
         }
     }
     /**
@@ -42,9 +43,16 @@ class AdminHomeOfficeController extends Controller
         if ($request->isMethod("POST")) {
             $ho = HomeOffice::find(decrypt($id));
             if ($ho) {
-                $ho->ho_status = $request->ho_status;
-                $ho->save();
-                return redirect()->back()->with('success', 'Response has been sent');
+                if ($request->ho_status == 'accepted' || $request->ho_status == 'declined') {
+                    $ho->ho_status = $request->ho_status;
+                    $ho->save();
+                    return redirect()->back()->with('success', 'Response has been sent');
+                } else if ($request->ho_status == 'delete') {
+                    $ho->delete();
+                    return redirect()->back()->with('success', 'Home Office application has been deleted');
+                } else {
+                    return redirect()->back()->with('warning', 'Something went wrong');
+                }
             } else {
                 return redirect()->back()->with('warning', 'Something went wrong');
             }

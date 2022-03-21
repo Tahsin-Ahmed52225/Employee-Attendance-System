@@ -36,9 +36,16 @@ class AdminLeaveController extends Controller
         if ($request->isMethod("POST")) {
             $leave = OfficeLeave::find(decrypt($id));
             if ($leave) {
-                $leave->leave_status = $request->leave_status;
-                $leave->save();
-                return redirect()->back()->with('success', 'Response has been sent');
+                if ($request->leave_status == 'accepted' || $request->leave_status == 'declined') {
+                    $leave->leave_status = $request->leave_status;
+                    $leave->save();
+                    return redirect()->back()->with('success', 'Response has been sent');
+                } else if ($request->leave_status == 'delete') {
+                    $leave->delete();
+                    return redirect()->back()->with('success', 'Leave application has been deleted');
+                } else {
+                    return redirect()->back()->with('warning', 'Something went wrong');
+                }
             } else {
                 return redirect()->back()->with('warning', 'Something went wrong');
             }
@@ -47,10 +54,10 @@ class AdminLeaveController extends Controller
     public function view(Request $request)
     {
         if ($request->isMethod("GET")) {
-            $user = User::where("role", "!=", "admin")->get();
-            dd($user);
+            $leave_list = OfficeLeave::where('leave_status', 'accepted')->orderBy('created_at', 'desc')->get();
 
-            return view("admin.leave.view");
+
+            return view("admin.leave.view", ['leave_list' => $leave_list]);
         }
     }
 }

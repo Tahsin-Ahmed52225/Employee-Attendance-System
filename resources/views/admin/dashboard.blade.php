@@ -115,7 +115,7 @@
                                 <div class=" chat-app">
                                     <div id="plist" class="people-list">
                                         <ul class="list-unstyled chat-list mt-2 mb-0">
-                                            @foreach ($employee_checked_in as $item)
+                                            @foreach ($employee_on_leave as $item)
                                                 <li class="clearfix active">
                                                     <img src="{{ $item->image == null ? asset('./files/profile_pics/pp.jpg') : asset('files/profile_pics/' . $item->image) }}"
                                                         alt="avatar">
@@ -123,8 +123,8 @@
                                                         <div class="name"> <b>{{ $item->name }}</b> -
                                                             {{ $item->position }}
                                                         </div>
-                                                        <div class="status"> <i class="fa fa-circle online"></i>
-                                                            online
+                                                        <div class="status"> <i class="fa fa-circle text-light"></i>
+                                                            On Leave
                                                         </div>
                                                     </div>
                                                 </li>
@@ -158,7 +158,7 @@
                                 <div class=" chat-app">
                                     <div id="plist" class="people-list">
                                         <ul class="list-unstyled chat-list mt-2 mb-0">
-                                            @foreach ($employee_checked_in as $item)
+                                            @foreach ($employee_on_home_office as $item)
                                                 <li class="clearfix active">
                                                     <img src="{{ $item->image == null ? asset('./files/profile_pics/pp.jpg') : asset('files/profile_pics/' . $item->image) }}"
                                                         alt="avatar">
@@ -166,8 +166,8 @@
                                                         <div class="name"> <b>{{ $item->name }}</b> -
                                                             {{ $item->position }}
                                                         </div>
-                                                        <div class="status"> <i class="fa fa-circle online"></i>
-                                                            online
+                                                        <div class="status"> <i class="fa fa-circle text-white"></i>
+                                                            Home Office
                                                         </div>
                                                     </div>
                                                 </li>
