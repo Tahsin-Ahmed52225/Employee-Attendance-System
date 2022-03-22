@@ -2,6 +2,7 @@
 
 @section('links')
     <link rel="stylesheet" href="{{ asset('dev-assets/css/datatable.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 @endsection
 
 
@@ -82,7 +83,7 @@
 
             <div class="card card-custom mt-4">
                 <div class="card-body">
-                    <table class="table" id="timesheetDatatable">
+                    <table class="table text-center" id="timesheetDatatable">
                         <thead>
 
                             <tr>
@@ -90,6 +91,7 @@
                                 <th>Number of Days</th>
                                 <th>Reason</th>
                                 <th>Status</th>
+                                <th>Action</th>
 
                             </tr>
                         </thead>
@@ -101,6 +103,44 @@
                                     <td>{{ $value->leave_days }}</td>
                                     <td>{{ $value->leave_description }}</td>
                                     <td style="text-transform: capitalize;">{{ $value->leave_status }}</td>
+                                    @if ($value->leave_status == 'Pending')
+                                        <td>
+                                            <button data-toggle="modal" data-target="#exampleModal"
+                                                class="btn btn-sm btn-danger">Delete</button>
+                                        </td>
+                                        {{-- delete modal starts --}}
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content ">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            <i class="flaticon-warning-sign text-warning"></i> Disclamer
+                                                        </h5>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete this leave request?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">No</button>
+                                                        <form method="POST"
+                                                            action="{{ route('employee.delete_leave_request', ['id' => encrypt($value->id)]) }}">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-danger">Yes, Sure</button>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- delete modal ends --}}
+                                    @else
+                                        <td>
+                                            <button class="btn btn-sm btn-light" disabled>Non Deletable</button>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

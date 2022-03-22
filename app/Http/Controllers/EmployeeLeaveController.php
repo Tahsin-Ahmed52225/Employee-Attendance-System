@@ -46,4 +46,18 @@ class EmployeeLeaveController extends Controller
             return redirect()->back()->with('warning', 'Something went wrong');
         }
     }
+    public function delete(Request $request, $id)
+    {
+        if ($request->isMethod("POST")) {
+            $leave = OfficeLeave::find(decrypt($id));
+            if ($leave) {
+                $leave->delete();
+                return redirect()->back()->with('success', 'Leave request has been deleted');
+            } else {
+                return redirect()->back()->with('warning', 'Something went wrong');
+            }
+        } else {
+            return redirect()->back()->with('warning', 'Something went wrong');
+        }
+    }
 }

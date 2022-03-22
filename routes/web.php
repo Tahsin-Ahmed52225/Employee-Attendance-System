@@ -61,8 +61,10 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::post('/change-profile-image', 'EmployeeProfileController@changeProfile')->name('change_profile_image');
     //App:Leave
     Route::match(['get', 'post'], '/leave-request', 'EmployeeLeaveController@index')->name('leave_request');
+    Route::post('/delete-leave-request/{id}', 'EmployeeLeaveController@delete')->name('delete_leave_request');
     //App:Home Office
     Route::match(['get', 'post'], '/home-office', 'EmployeeHomeOfficeController@index')->name('ho_request');
+    Route::post('/delete-ho-request/{id}', 'EmployeeHomeOfficeController@delete')->name('delete_home_request');
     //App:Daily Update
     Route::match(['get', 'post'], '/daily-update', 'EmployeeDailyUpdateController@index')->name('daily_update');
     Route::post('/update-daily-update/{id}', 'EmployeeDailyUpdateController@update')->name('update_task');

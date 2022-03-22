@@ -47,4 +47,18 @@ class EmployeeHomeOfficeController extends Controller
             return redirect()->back()->with('warning', 'Something went wrong');
         }
     }
+    public function delete(Request $request, $id)
+    {
+        if ($request->isMethod("POST")) {
+            $ho = HomeOffice::find(decrypt($id));
+            if ($ho) {
+                $ho->delete();
+                return redirect()->back()->with('success', 'Home office request has been deleted');
+            } else {
+                return redirect()->back()->with('warning', 'Something went wrong');
+            }
+        } else {
+            return redirect()->back()->with('warning', 'Something went wrong');
+        }
+    }
 }
