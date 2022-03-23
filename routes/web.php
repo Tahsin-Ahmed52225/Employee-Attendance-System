@@ -48,6 +48,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     //App:Daily Report
     Route::get('/daily-report', 'AdminDailyUpdateController@index')->name('daily_report');
+
+    //App:Settings
+    Route::match(['get', 'post'], '/settings', 'SettingController@view')->name('settings');
 });
 
 ##############################################################   Employee Routes    ############################################################

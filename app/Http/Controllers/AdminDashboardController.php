@@ -27,14 +27,16 @@ class AdminDashboardController extends Controller
                 ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
 
-            $employee_on_leave = OfficeLeave::whereDate('leave_description.created_at', '=', now())
+            $employee_on_leave = OfficeLeave::whereDate('leave_description.leave_starting_date', '<=', now())
+                ->whereDate('leave_description.leave_ending_date', '>=', now())
                 ->where('leave_description.leave_status', '=', 'accepted')
                 ->join('users', 'users.id', '=', 'leave_description.user_id')
                 ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
 
 
-            $employee_on_home_office = HomeOffice::whereDate('homeoffice.created_at', '=', now())
+            $employee_on_home_office = HomeOffice::whereDate('homeoffice.ho_starting_date', '<=', now())
+                ->whereDate('homeoffice.ho_ending_date', '<=', now())
                 ->where('homeoffice.ho_status', '=', 'accepted')
                 ->join('users', 'users.id', '=', 'homeoffice.user_id')
                 ->where('users.role', '!=', 'admin')

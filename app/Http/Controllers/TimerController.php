@@ -83,7 +83,7 @@ class TimerController extends Controller
                         $timer->check_out = now();
                         $timer->total_time = $timer->check_out->diffInMinutes($timer->check_in);
                         $timer->daily_update = $request->description;
-                        $timer->status = ($request->type == "TIMER") ? "FD" : "HO";
+                        $timer->status = check_out_status($timer->check_in->diffInMinutes($timer->check_in), $timer->total_time, 8, $request->type);
                         $timer->save();
                         $msg = "<div class='alert alert-success fade show' role='alert'>"
                             . $request->hr . " Hour " . $request->min . " Min added to today

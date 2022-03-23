@@ -15,3 +15,21 @@ if (!function_exists('min_to_hour')) {
         return $hour . 'h ' . $mins . 'm';
     }
 }
+//Check employe each day status
+function check_out_status($time_diff_form_office,  $employee_work_hour, $office_work_hour,  $type)
+{
+    $status = '';
+    if ($type == 'TIMER') {
+        if ($time_diff_form_office > 0) {
+            $status = 'Late,';
+        }
+        if (($employee_work_hour % 60) < ($office_work_hour / 2)) {
+            $status = $status . 'HD,';
+        } else {
+            $status = $status . 'FD';
+        }
+    } else {
+        $status = 'HO';
+    }
+    return $status;
+}
