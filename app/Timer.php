@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Timer extends Model
 {
+    //Table associated with this model
     protected $table = "timesheet";
     /**
      * The attributes that are mass assignable.

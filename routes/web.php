@@ -49,8 +49,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     //App:Daily Report
     Route::get('/daily-report', 'AdminDailyUpdateController@index')->name('daily_report');
 
+    //App:Office Holidays
+    Route::match(['get', 'post'], '/office-holidays', 'HolidayController@index')->name('office_holidays');
+    Route::match(['get', 'post'], '/view-office-holidays', 'HolidayController@view')->name('view_office_holidays');
+
+
     //App:Settings
-    Route::match(['get', 'post'], '/settings', 'SettingController@view')->name('settings');
+    Route::match(['get', 'post'], '/settings', 'SettingController@index')->name('settings');
 });
 
 ##############################################################   Employee Routes    ############################################################
