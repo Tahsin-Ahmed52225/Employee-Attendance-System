@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Http\Request;
+
+//Custom models
 use App\HomeOffice;
 use App\OfficeLeave;
-use Illuminate\Http\Request;
+use App\OfficeHoliday;
+
 
 class EmployeeDashboardController extends Controller
 {
-    public function view()
+    public function view(Request $request)
     {
         // $ip = file_get_contents('https://api.my-ip.io/ip');
         // if ($ip == '203.76.222.138') {
@@ -46,8 +51,19 @@ class EmployeeDashboardController extends Controller
             })
             ->get();
 
+        //Check if it is Office holiday
+        $office_holidays = OfficeHoliday::where(function ($query) {
+            $query->where('days', 1)
+                ->whereDate('start_date', '=', now()->toDateString());
+        })
+            ->orWhere(function ($query) {
+                $query->where('days', '>', 1)
+                    ->whereDate('start_date', '<=', now()->toDateString())
+                    ->whereDate('end_date', '>=', now()->toDateString());
+            })
+            ->get();
 
 
-        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office]);
+        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office, 'office_holidays' => $office_holidays]);
     }
 }

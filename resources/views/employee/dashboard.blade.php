@@ -21,6 +21,17 @@
                         </div>
                     </div>
                 </div>
+            @elseif(count($office_holidays) != 0)
+                <div class="row">
+                    <div class="col">
+                        <div class="card card-custom" style="background: 	#42ba96">
+                            <div class="card-body text-center h4  text-white">
+
+                                Holiday Running !!! Enjoy
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @else
                 <div class="row">
                     <div class="col-xl-6 col-md-12 mb-4">

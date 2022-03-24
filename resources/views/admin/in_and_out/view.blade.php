@@ -21,34 +21,6 @@
                                 <div class="col">
                                     Timesheet
                                 </div>
-                                <div class="col">
-                                    <select class="form-control" id="exampleSelect1">
-                                        <option>Select Month</option>
-                                        <option value=1>January</option>
-                                        <option value=2>February</option>
-                                        <option value=3>March</option>
-                                        <option value=4>April</option>
-                                        <option value=5>May</option>
-                                        <option value=6>June</option>
-                                        <option value=7>July</option>
-                                        <option value=8>August</option>
-                                        <option value=9>September</option>
-                                        <option value=10>October</option>
-                                        <option value=11>November</option>
-                                        <option value=12>December</option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <select class="form-control" id="exampleSelect1">
-                                        <option>Select Year</option>
-                                        @for ($i = 2020; $i <= Carbon\Carbon::now()->year; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <a href="" class="btn btn-primary">Get Record</a>
-                                </div>
                             </div>
 
                         </div>
@@ -74,9 +46,16 @@
                                         <td>{{ $item->name }}</td>
                                         <td>{{ \Carbon\Carbon::parse($item->check_in)->format('h:i A') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($item->check_out)->format('h:i A') }}</td>
-                                        <td>{{ min_to_hour($item->total_time) }}
+                                        <td>{{ App\Helpers::min_to_hour($item->total_time) }}
                                         </td>
-                                        <td>São Félix do Xingu</td>
+                                        <td>
+                                            @php
+                                                $badge = App\Helpers::stringToBadge($item->status);
+                                                foreach ($badge as $key => $value) {
+                                                    echo $value;
+                                                }
+                                            @endphp
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

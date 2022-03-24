@@ -71,7 +71,8 @@
                                         <div class="col-lg-4 col-md-9 col-sm-12">
                                             <div class="input-group timepicker">
                                                 <input name="office_time_starts" class="form-control" id="kt_timepicker_2"
-                                                    readonly placeholder="Select time" type="text" />
+                                                    value="{{ App\Helpers::settings('office_time_starts') }}" readonly
+                                                    placeholder="Select time" type="text" />
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="la la-clock-o"></i>
@@ -88,7 +89,8 @@
                                         <div class="col-lg-4 col-md-9 col-sm-12">
                                             <div class="input-group timepicker">
                                                 <input name="office_time_ends" class="form-control" id="kt_timepicker_2"
-                                                    readonly placeholder="Select time" type="text" />
+                                                    value="{{ App\Helpers::settings('office_time_ends') }}" readonly
+                                                    placeholder="Select time" type="text" />
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
                                                         <i class="la la-clock-o"></i>
@@ -96,13 +98,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <i class="flaticon2-information"> </i>
+                                        <i class="flaticon2-information" data-toggle="tooltip" data-placement="right"
+                                            title="Input time should be on 24hr format"> </i>
                                     </div>
                                     <div class="form-group row align-items-center   ">
                                         <label class="col-form-label  col-lg-3 col-sm-12">Office Hours</label>
                                         <div class="col-lg-4 col-md-9 col-sm-12">
                                             <div class="input-group ">
                                                 <input name="office_hours" class="form-control" placeholder="Select time"
+                                                    value="{{ (int) App\Helpers::settings('office_hours') }}"
                                                     type="number" />
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">
@@ -111,7 +115,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <i class="flaticon2-information"> </i>
+                                        <i class="flaticon2-information" data-toggle="tooltip" data-placement="right"
+                                            title="Input must be a integer number"> </i>
                                     </div>
                                     <button type="submit" class="subscribe btn btn-primary btn-block pill shadow-sm">
                                         Save Changes

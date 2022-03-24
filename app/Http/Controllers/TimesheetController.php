@@ -18,7 +18,7 @@ class TimesheetController extends Controller
                 ->join('users', 'users.id', '=', 'timesheet.user_id')
                 ->where('users.role', '=', 'employee')
                 ->orderBy('timesheet.check_in', 'DESC')
-                ->get(['users.name', 'timesheet.check_in', 'timesheet.check_out', 'timesheet.total_time']);
+                ->get(['users.name', 'timesheet.check_in', 'timesheet.check_out', 'timesheet.total_time', 'timesheet.status']);
             //dd($timesheet);
             return view("admin.in_and_out.view", ['timesheet' => $timesheet]);
         }

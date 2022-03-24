@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 //Custom Models
 use App\Settings;
@@ -12,6 +13,7 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         if ($request->isMethod("GET")) {
+            //dd(Helpers::settings('office_time_starts'));
             return view("admin.settings");
         } else if ($request->isMethod("POST")) {
 
@@ -28,9 +30,10 @@ class SettingController extends Controller
                 }
                 if ($request->office_hours) {
                     $settings = Settings::where('name', 'office_hours')->first();
-                    $settings->value = $request->office_time_interval;
+                    $settings->value = $request->office_hours;
                     $settings->save();
                 }
+                // dd(Cache::get('settings'));
                 return redirect()->back()->with('success', 'Settings updated successfully');
             } else {
                 return redirect()->back()->with('warning', 'Something went wrong');

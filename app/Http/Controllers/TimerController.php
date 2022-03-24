@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 //Models
 use App\Timer;
+use App\Helpers;
 
 class TimerController extends Controller
 {
@@ -83,7 +85,9 @@ class TimerController extends Controller
                         $timer->check_out = now();
                         $timer->total_time = $timer->check_out->diffInMinutes($timer->check_in);
                         $timer->daily_update = $request->description;
-                        $timer->status = check_out_status($timer->check_in->diffInMinutes($timer->check_in), $timer->total_time, 8, $request->type);
+                        //Getting the check in time in string
+                        $check_in_time = $timer->check_in;
+                        $timer->status = Helpers::check_out_status(Carbon::parse($check_in_time)->format('h:i A'), $timer->total_time, $request->type);
                         $timer->save();
                         $msg = "<div class='alert alert-success fade show' role='alert'>"
                             . $request->hr . " Hour " . $request->min . " Min added to today

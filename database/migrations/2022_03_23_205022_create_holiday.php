@@ -18,7 +18,7 @@ class CreateHoliday extends Migration
             $table->text('title')->comment("Holiday Title");
             $table->integer('days')->comment("Number of days");
             $table->date('start_date')->comment("Start Date");
-            $table->date('end_date')->comment("End Date");
+            $table->date('end_date')->comment("End Date")->nullable();
             $table->timestamps();
         });
     }

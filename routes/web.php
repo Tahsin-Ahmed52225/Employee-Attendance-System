@@ -52,6 +52,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     //App:Office Holidays
     Route::match(['get', 'post'], '/office-holidays', 'HolidayController@index')->name('office_holidays');
     Route::match(['get', 'post'], '/view-office-holidays', 'HolidayController@view')->name('view_office_holidays');
+    Route::post('/delete-office-holidays/{id}', 'HolidayController@delete')->name('delete_office_holidays');
 
 
     //App:Settings

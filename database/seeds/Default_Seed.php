@@ -21,7 +21,7 @@ class Default_Seed extends Seeder
             'value' => '18:00:00',
         ]);
         DB::table('system_settings')->insert([
-            'name' => 'office_time_ends',
+            'name' => 'office_hours',
             'value' => '8',
         ]);
     }
