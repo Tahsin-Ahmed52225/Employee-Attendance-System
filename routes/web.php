@@ -37,6 +37,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     //App:In & Out
     Route::match(['get', 'post'], '/in-and-out', 'TimerController@view')->name('in_and_out');
     Route::get('/view-timesheet', 'TimesheetController@view')->name('view_timesheet');
+    Route::get('/view-absent-list', 'TimesheetController@absent')->name('view_absent_list');
     //App:Leave
     Route::match(['get', 'post'], '/leave-list', 'AdminLeaveController@view')->name('leave_list');
     Route::get('/leave-request', 'AdminLeaveController@index')->name('leave_request');

@@ -22,10 +22,10 @@ class TimerController extends Controller
     public function checkIn(Request $request)
     {
         if ($request->ajax()) {
-            $check_id_checker = Timer::whereDate('check_in', now())->where('user_id', Auth::user()->id)->first();
+            $check_id_checker = Timer::whereDate('created_at', now())->where('user_id', Auth::user()->id)->first();
             if ($check_id_checker) {
                 $msg = "<div class='alert alert-warning fade show' role='alert'>"
-                    . "Already Checked In Today
+                    . "Todays status has been recorded already
                           <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                           <span aria-hidden='true'>&times;</span>
                         </button>
@@ -107,12 +107,12 @@ class TimerController extends Controller
                     }
                 } else {
                     $msg = "<div class='alert alert-warning fade show' role='alert'>"
-                        . " You have to check in first
+                        . " Checkout disabled for this day ! Contact Admin
                       <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                       <span aria-hidden='true'>&times;</span>
                     </button>
                   </div>";
-                    return response()->json(array('msg' => $msg, 'stage' => false), 200);
+                    return response()->json(array('msg' => $msg, 'stage' => true), 200);
                 }
             }
         } else {

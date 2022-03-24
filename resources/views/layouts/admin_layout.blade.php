@@ -248,6 +248,16 @@
                                                 <span class="menu-text">App : View Timetable</span>
                                             </a>
                                         </li>
+                                        <li class="menu-item menu-item-submenu" aria-haspopup="true"
+                                            data-menu-toggle="hover">
+                                            <a href="{{ route('admin.view_absent_list') }}"
+                                                class="menu-link menu-toggle">
+                                                <i class="menu-bullet menu-bullet-line">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">App : View Absent List</span>
+                                            </a>
+                                        </li>
 
                                     </ul>
                                 </div>
