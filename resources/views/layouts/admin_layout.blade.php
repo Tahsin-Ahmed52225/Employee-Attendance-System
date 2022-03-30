@@ -258,6 +258,22 @@
                                                 <span class="menu-text">App : View Absent List</span>
                                             </a>
                                         </li>
+                                        <li class="menu-item menu-item-submenu" aria-haspopup="true"
+                                            data-menu-toggle="hover">
+                                            <a href="{{ route('admin.view_pending_list') }}"
+                                                class="menu-link menu-toggle">
+                                                <i class="menu-bullet menu-bullet-line">
+                                                    <span></span>
+                                                </i>
+                                                <span class="menu-text">App : View Pending List
+                                                    @if ($pending_list > 0)
+                                                        <span
+                                                            class="m-2 badge rounded-pill bg-danger text-white">{{ $pending_list }}</span>
+                                                    @endif
+                                                </span>
+
+                                            </a>
+                                        </li>
 
                                     </ul>
                                 </div>

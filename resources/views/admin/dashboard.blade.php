@@ -32,7 +32,7 @@
                                     <div id="plist" class="people-list">
                                         <ul class="list-unstyled chat-list mt-2 mb-0">
                                             @foreach ($employee_checked_in as $item)
-                                                <li class="clearfix active">
+                                                <li class="clearfix active mb-2">
                                                     <img src="{{ $item->image == null ? asset('./files/profile_pics/pp.jpg') : asset('files/profile_pics/' . $item->image) }}"
                                                         alt="avatar">
                                                     <div class="about">
@@ -116,7 +116,7 @@
                                     <div id="plist" class="people-list">
                                         <ul class="list-unstyled chat-list mt-2 mb-0">
                                             @foreach ($employee_on_leave as $item)
-                                                <li class="clearfix active">
+                                                <li class="clearfix active mb-2">
                                                     <img src="{{ $item->image == null ? asset('./files/profile_pics/pp.jpg') : asset('files/profile_pics/' . $item->image) }}"
                                                         alt="avatar">
                                                     <div class="about">
@@ -159,7 +159,7 @@
                                     <div id="plist" class="people-list">
                                         <ul class="list-unstyled chat-list mt-2 mb-0">
                                             @foreach ($employee_on_home_office as $item)
-                                                <li class="clearfix active">
+                                                <li class="clearfix active mb-2">
                                                     <img src="{{ $item->image == null ? asset('./files/profile_pics/pp.jpg') : asset('files/profile_pics/' . $item->image) }}"
                                                         alt="avatar">
                                                     <div class="about">

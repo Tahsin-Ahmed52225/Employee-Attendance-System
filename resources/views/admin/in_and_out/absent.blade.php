@@ -15,14 +15,11 @@
             <div class="container-fluid">
 
                 <div class="card card-custom">
-                    <div class="card-header flex-wrap py-5">
-                        <div class="card-title w-100">
-                            <div class="row w-100 align-items-center">
-                                <div class="col">
-                                    Timesheet
-                                </div>
+                    <div class="card-header flex-wrap">
+                        <div class="row w-100 align-items-center">
+                            <div class="col">
+                                <h3>Absent List</h3>
                             </div>
-
                         </div>
                     </div>
                     <div class="card-body">
@@ -33,33 +30,17 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Name</th>
-                                    <th>Checked In</th>
-                                    <th>Checked Out</th>
-                                    <th>Total hour</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($timesheet as $item)
+                                @foreach ($AbsentList as $item)
                                     <tr>
-                                        <td>{{ \Carbon\Carbon::parse($item->check_in)->format('d M Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($item->check_in)->format('h:i A') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($item->check_out)->format('h:i A') }}</td>
-                                        <td>{{ App\Helpers::min_to_hour($item->total_time) }}
                                         </td>
                                         <td>
-                                            @php
-                                                if ($item->status == 'Pending') {
-                                                    echo '<span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill">Pending</span>';
-                                                } else {
-                                                    $badge = App\Helpers::stringToBadge($item->status);
-                                                    foreach ($badge as $key => $value) {
-                                                        echo $value;
-                                                    }
-                                                }
-
-                                            @endphp
+                                            <span class="badge bg-danger text-white">Absent</span>
                                         </td>
                                     </tr>
                                 @endforeach

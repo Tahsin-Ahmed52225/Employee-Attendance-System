@@ -19,7 +19,7 @@
                         <div class="card-title w-100">
                             <div class="row w-100 align-items-center">
                                 <div class="col">
-                                    Timesheet
+                                    <h3>Holiday List</h3>
                                 </div>
                             </div>
 

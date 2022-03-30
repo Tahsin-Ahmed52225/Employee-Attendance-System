@@ -12,6 +12,11 @@
             <!--begin::Container-->
             <div class="container-fluid">
                 <div class="container" id="post_data">
+                    <div class="card card-custom mb-2">
+                        <div class="card-body">
+                            <h5>Global Update</h5>
+                        </div>
+                    </div>
                     @include('admin.daily_report.data')
                 </div>
                 <div class="ajax-load text-center" style=" display: none;">

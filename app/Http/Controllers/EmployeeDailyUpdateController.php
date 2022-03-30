@@ -19,6 +19,7 @@ class EmployeeDailyUpdateController extends Controller
     {
 
         $updates = Timer::where('user_id', auth()->id())
+            ->where('daily_update', '!=', null)
             ->where('check_out', "!=", null)
             ->join("users", "users.id", "=", "timesheet.user_id")
             ->orderBy('timesheet.check_out', 'desc')

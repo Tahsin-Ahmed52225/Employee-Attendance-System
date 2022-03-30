@@ -14,29 +14,42 @@ class AdminDashboardController extends Controller
     {
         if ($request->isMethod("GET")) {
 
-            $employee_checked_in = Timer::whereDate('timesheet.created_at', '=', now())
-
+            $employee_checked_in = Timer::whereDate('timesheet.check_in', '=', now())
                 ->where('timesheet.check_out', '=', null)
                 ->join('users', 'users.id', '=', 'timesheet.user_id')
                 ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
 
-            $employee_checked_out = Timer::whereDate('timesheet.created_at', '=', now())
+            $employee_checked_out = Timer::whereDate('timesheet.check_out', '=', now())
                 ->where('timesheet.check_out', '!=', null)
                 ->join('users', 'users.id', '=', 'timesheet.user_id')
                 ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
 
-            $employee_on_leave = OfficeLeave::whereDate('leave_description.leave_starting_date', '<=', now())
-                ->whereDate('leave_description.leave_ending_date', '>=', now())
+            $employee_on_leave = OfficeLeave::where(function ($query) {
+                $query->where('leave_days', 1)
+                    ->whereDate('leave_starting_date', '=', now()->toDateString());
+            })
+                ->orWhere(function ($query) {
+                    $query->where('leave_days', '>', 1)
+                        ->whereDate('leave_starting_date', '<=', now()->toDateString())
+                        ->whereDate('leave_ending_date', '>=', now()->toDateString());
+                })
                 ->where('leave_description.leave_status', '=', 'accepted')
                 ->join('users', 'users.id', '=', 'leave_description.user_id')
                 ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
 
 
-            $employee_on_home_office = HomeOffice::whereDate('homeoffice.ho_starting_date', '<=', now())
-                ->whereDate('homeoffice.ho_ending_date', '<=', now())
+            $employee_on_home_office = HomeOffice::where(function ($query) {
+                $query->where('ho_days', 1)
+                    ->whereDate('ho_starting_date', '=', now()->toDateString());
+            })
+                ->orWhere(function ($query) {
+                    $query->where('ho_days', '>', 1)
+                        ->whereDate('ho_starting_date', '<=', now()->toDateString())
+                        ->whereDate('ho_ending_date', '>=', now()->toDateString());
+                })
                 ->where('homeoffice.ho_status', '=', 'accepted')
                 ->join('users', 'users.id', '=', 'homeoffice.user_id')
                 ->where('users.role', '!=', 'admin')

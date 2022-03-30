@@ -31,6 +31,20 @@ class TimesheetController extends Controller
                 ->where('users.role', '=', 'employee')
                 ->orderBy('timesheet.check_in', 'DESC')
                 ->get(['users.name', 'timesheet.check_in', 'timesheet.check_out', 'timesheet.total_time', 'timesheet.status']);
+
+            return view("admin.in_and_out.absent", ['AbsentList' => $AbsentList]);
+        }
+    }
+    public function pending(Request $request)
+    {
+        if ($request->isMethod("GET")) {
+            $PendingList = Timer::where('status', '=', 'Pending')
+                ->join('users', 'users.id', '=', 'timesheet.user_id')
+                ->where('users.role', '=', 'employee')
+                ->orderBy('timesheet.check_in', 'DESC')
+                ->get(['users.name', 'timesheet.check_in', 'timesheet.check_out', 'timesheet.total_time', 'timesheet.status']);
+
+            return view("admin.in_and_out.pending", ['PendingList' => $PendingList]);
         }
     }
 }

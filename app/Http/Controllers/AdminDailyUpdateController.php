@@ -13,6 +13,7 @@ class AdminDailyUpdateController extends Controller
     {
 
         $updates = Timer::join("users", "users.id", "=", "timesheet.user_id")
+            ->where("timesheet.daily_update", "!=", null)
             ->where("check_out", "!=", null)
             ->where('users.role', '!=', 'admin')
             ->orderBy('timesheet.check_out', 'desc')

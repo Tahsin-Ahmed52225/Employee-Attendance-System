@@ -34,5 +34,10 @@ class AppServiceProvider extends ServiceProvider
             $pending_ho_application_count = \App\HomeOffice::where('ho_status', '=', 'Pending')->count();
             $view->with('pending_ho_application_count', $pending_ho_application_count);
         });
+        //Getting pending list number
+        view()->composer('*', function ($view) {
+            $pending_list = \App\Timer::where('status', '=', 'Pending')->count();
+            $view->with('pending_list', $pending_list);
+        });
     }
 }
