@@ -39,7 +39,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/view-timesheet', 'TimesheetController@view')->name('view_timesheet');
     Route::get('/view-absent-list', 'TimesheetController@absent')->name('view_absent_list');
     Route::get('/view-pending-list', 'TimesheetController@pending')->name('view_pending_list');
-    Route::post('/view-pending-clearence', 'TimesheetController@pending_clearence')->name('pending_clearence');
+    Route::post('/pending-clearence/{id}', 'TimesheetController@pending_clearence')->name('pending_clearence');
     //App:Leave
     Route::match(['get', 'post'], '/leave-list', 'AdminLeaveController@view')->name('leave_list');
     Route::get('/leave-request', 'AdminLeaveController@index')->name('leave_request');
@@ -80,4 +80,5 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     //App:Daily Update
     Route::match(['get', 'post'], '/daily-update', 'EmployeeDailyUpdateController@index')->name('daily_update');
     Route::post('/update-daily-update/{id}', 'EmployeeDailyUpdateController@update')->name('update_task');
+    Route::match(['get', 'post'], '/pending-update', 'EmployeeDashboardController@pendingUpdate')->name('pending_update');
 });

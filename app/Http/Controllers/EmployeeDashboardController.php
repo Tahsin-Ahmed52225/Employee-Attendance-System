@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\HomeOffice;
 use App\OfficeLeave;
 use App\OfficeHoliday;
+use App\Timer;
 
 
 class EmployeeDashboardController extends Controller
@@ -62,8 +63,32 @@ class EmployeeDashboardController extends Controller
                     ->whereDate('end_date', '>=', now()->toDateString());
             })
             ->get();
+        //days without updates
+        $pending_update = Timer::where('user_id', auth()->user()->id)
+            ->where('daily_update', null)
+            ->where('status', '!=', 'Pending')
+            ->where('status', '!=', 'Absent')
+            ->get();
+        //days without checkouts
+        $pending_checkout = Timer::where('user_id', auth()->user()->id)
+            ->where('daily_update', null)
+            ->where('check_out', null)
+            ->where('status', '==', 'Pending')
+            ->get();
 
 
-        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office, 'office_holidays' => $office_holidays]);
+        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office, 'office_holidays' => $office_holidays, 'pending_update' => $pending_update, 'pending_checkout' => $pending_checkout]);
+    }
+    public function pendingUpdate(Request $request)
+    {
+        if ($request->isMethod("GET")) {
+            $pending_state = Timer::where('user_id', auth()->user()->id)
+                ->where('daily_update', null)
+                ->where('status', '!=', 'Pending')
+                ->where('status', '!=', 'Absent')
+                ->get();
+            return view('employee.daily_report.pending', ['pending_state' => $pending_state]);
+        } else {
+        }
     }
 }

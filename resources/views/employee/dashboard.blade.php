@@ -117,22 +117,20 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Update Left
                                         </div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="progress progress-sm mr-2">
-                                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
-                                                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    {{ count($pending_update) }}
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        <a href="{{ route('employee.pending_update') }}"><button
+                                                class="btn btn-primary btn-sm">Details</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +144,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Pending Requests</div>
+                                            Demo Doing</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                     </div>
                                     <div class="col-auto">
@@ -168,6 +166,40 @@
                 </div>
             </div>
             @endif --}}
+
+            {{-- pending table starts --}}
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Pending Days</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered" id="timesheetDatatable">
+                        <thead>
+
+                            <tr>
+                                <th>Date</th>
+                                <th>Checked In</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pending_checkout as $item)
+                                <tr data-toggle="modal" data-target="#staticBackdrop{{ $item->id }}">
+                                    <td>{{ \Carbon\Carbon::parse($item->check_in)->format('d M Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->check_in)->format('h:i A') }}</td>
+                                    <td>
+                                        <span class="badge rounded-pill bg-warning text-dark">Pending</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+            {{-- pedning table ends --}}
 
         </div>
 
