@@ -74,12 +74,12 @@
                                         <td>
 
                                             <div class="row">
-                                                <div class="col d-flex align-items-center justify-content-end   "
+                                                <div class="col d-flex align-items-center justify-content-center   "
                                                     onclick="deleteMember({!! $values->id !!})">
                                                     <i class="fas fa-trash-alt p_icon"></i>
                                                 </div>
 
-                                                <div class="col d-flex align-items-center justify-content-start">
+                                                {{-- <div class="col d-flex align-items-center justify-content-start">
                                                     <input class="switchT" data-stage={{ $values->stage }}
                                                         data-user={{ $values->id }} id="toggle{{ $values->id }}"
                                                         type="checkbox" data-on="Lock" data-off="Unlock"
@@ -87,7 +87,7 @@
                                                         data-offstyle="danger" <?php if ($values->stage == 1) {
     echo 'checked';
 } ?>>
-                                                </div>
+                                                </div> --}}
 
 
 
