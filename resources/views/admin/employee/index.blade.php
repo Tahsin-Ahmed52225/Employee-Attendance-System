@@ -48,7 +48,9 @@
 
                                         <td style="padding: 17px 5px !important;">{{ $i }}</td>
                                         <td id="name{{ $values->id }}" style="padding: 17px 5px !important;"
-                                            ondblclick="updateName({!! $values->id !!})">{{ $values->name }}</td>
+                                            ondblclick="updateName({!! $values->id !!})">
+                                            {{ $values->name }}
+                                        </td>
                                         <td id="email{{ $values->id }}" style="padding: 17px 5px !important;"
                                             ondblclick="updateEmail({!! $values->id !!})">{{ $values->email }}</td>
                                         <td id="number{{ $values->id }}" style="padding: 17px 5px !important;"
@@ -74,23 +76,17 @@
                                         <td>
 
                                             <div class="row">
-                                                <div class="col d-flex align-items-center justify-content-center   "
+                                                <div class="col d-flex align-items-center justify-content-between">
+                                                    <a
+                                                        href="{{ route('admin.office_days', ['id' => encrypt($values->id)]) }}">
+                                                        <button class="btn btn-sm btn-primary">View Details</button>
+                                                    </a>
+
+                                                </div>
+                                                <div class="col d-flex align-items-center justify-content-between"
                                                     onclick="deleteMember({!! $values->id !!})">
                                                     <i class="fas fa-trash-alt p_icon"></i>
                                                 </div>
-
-                                                {{-- <div class="col d-flex align-items-center justify-content-start">
-                                                    <input class="switchT" data-stage={{ $values->stage }}
-                                                        data-user={{ $values->id }} id="toggle{{ $values->id }}"
-                                                        type="checkbox" data-on="Lock" data-off="Unlock"
-                                                        data-toggle="toggle" data-width="95" data-height="10"
-                                                        data-offstyle="danger" <?php if ($values->stage == 1) {
-    echo 'checked';
-} ?>>
-                                                </div> --}}
-
-
-
                                             </div>
                                         </td>
                                     </tr>

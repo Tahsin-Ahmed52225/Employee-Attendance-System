@@ -30,6 +30,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/view-member', 'AdminAddMemberController@viewMember')->name('view_member');
     Route::get('/delete-member', 'AdminAddMemberController@deleteMember')->name('delete_member');
     Route::get('/update-member', 'AdminAddMemberController@updateMember')->name('update_member');
+    Route::get('/office-days/{id}', 'AdminViewController@index')->name('office_days');
+    Route::get('/view-profile/{id}', 'AdminViewController@viewProfile')->name('view_profile');
     //Profile Route
     Route::get('/profile', 'AdminProfileController@view')->name('profile');
     Route::match(['get', 'post'], '/edit-profile', 'AdminProfileController@edit')->name('edit_profile');
@@ -81,4 +83,6 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::match(['get', 'post'], '/daily-update', 'EmployeeDailyUpdateController@index')->name('daily_update');
     Route::post('/update-daily-update/{id}', 'EmployeeDailyUpdateController@update')->name('update_task');
     Route::match(['get', 'post'], '/pending-update', 'EmployeeDashboardController@pendingUpdate')->name('pending_update');
+    //App:View
+    Route::get('office-days', 'EmployeeViewController@index')->name('office_days');
 });

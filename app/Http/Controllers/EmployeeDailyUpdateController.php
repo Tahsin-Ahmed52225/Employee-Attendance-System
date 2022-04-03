@@ -59,4 +59,16 @@ class EmployeeDailyUpdateController extends Controller
             return redirect()->back();
         }
     }
+    public function officeDays(Request $request)
+    {
+        if ($request->isMethod("GET")) {
+            $days = Timer::where('user_id', auth()->id())
+                ->where('daily_update', '!=', null)
+                ->where('check_out', "!=", null)
+                ->join("users", "users.id", "=", "timesheet.user_id")
+                ->orderBy('timesheet.check_out', 'desc')
+                ->paginate(9, ['users.name', 'timesheet.*']);
+            return view("employee.daily_report.office_days", ['days' => $days]);
+        }
+    }
 }
