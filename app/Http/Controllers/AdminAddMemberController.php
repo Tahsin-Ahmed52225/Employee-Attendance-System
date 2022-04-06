@@ -49,7 +49,7 @@ class AdminAddMemberController extends Controller
                     'position' =>  $data['position'],
                     'role' => 'employee',
                     'stage' => 1,
-                    'password' => Hash::make($request->password),
+                    'password' => Hash::make($data['password']),
                 ]);
                 if ($user != null) {
                     return redirect()->back()->with(session()->flash('alert-success', 'Member Added !'));
