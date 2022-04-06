@@ -1,6 +1,25 @@
 # Employee Attendance System
 
-#About This Project
+## About This Project
+This is a Employee Attendance System. I have created two user panal/Role
+    1.Admin 
+    2.Employee
+_Admin Panel: _
+- Admin can create,update,delete any member and member can access their profile with those credentials 
+- Admin can see each member  profile , and total overview of there attendance profile
+- Admin can see all the member daily work update
+- Admin can see who checked in , checked out , on leave , on home office on a daily basic 
+- Admin can approve or reject any leave and home office request 
+- Admin can add delete office holiday 
+- Admin can change office start time , end time and total working hour 
+_Employee Panel:_
+-Employee can update their profile 
+-Employee can request for leave , home office 
+-Employee can check in and check out and add daily update
+
+
+
+
 
 
 ## Installation
