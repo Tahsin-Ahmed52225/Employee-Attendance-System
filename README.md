@@ -1,4 +1,4 @@
-# ![Employee Attendance System]
+# Employee Attendance System
 
 #About This Project
 
