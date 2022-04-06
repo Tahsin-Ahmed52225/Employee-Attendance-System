@@ -1,8 +1,8 @@
 # Employee Attendance System
 ## About This Project:
 ###### Technologies  Used:  <br>
-Frontend: HTM,CSS,Bootstrap,JS,Jquery
-Backend: Laravel 7.1
+**Frontend:** HTM,CSS,Bootstrap,JS,Jquery<br>
+**Backend:** Laravel 7.1<br><br>
 This is a Employee Attendance System. I have created two user panal/Role <br>
     1.Admin <br>
     2.Employee <br>
