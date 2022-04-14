@@ -1,4 +1,4 @@
-@extends('layouts.employee_layout')
+@extends('layouts.admin_layout')
 
 
 @section('links')

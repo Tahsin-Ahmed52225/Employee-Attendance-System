@@ -2,6 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/clear', function () {
+
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+
+    return "Cleared!";
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,7 +46,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::match(['get', 'post'], '/edit-profile', 'AdminProfileController@edit')->name('edit_profile');
     Route::post('/change-profile-image', 'AdminProfileController@changeProfile')->name('change_profile_image');
     //App:In & Out
-    Route::match(['get', 'post'], '/in-and-out', 'TimerController@view')->name('in_and_out');
     Route::get('/view-timesheet', 'TimesheetController@view')->name('view_timesheet');
     Route::get('/view-absent-list', 'TimesheetController@absent')->name('view_absent_list');
     Route::get('/view-pending-list', 'TimesheetController@pending')->name('view_pending_list');
@@ -72,6 +80,7 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     //Profile Route
     Route::match(['get', 'post'], '/profile', 'EmployeeProfileController@view')->name('profile');
     Route::match(['get', 'post'], '/edit-profile', 'EmployeeProfileController@edit')->name('edit_profile');
+    Route::match(['get', 'post'], '/change-password', 'EmployeeProfileController@changePassword')->name('change_password');
     Route::post('/change-profile-image', 'EmployeeProfileController@changeProfile')->name('change_profile_image');
     //App:Leave
     Route::match(['get', 'post'], '/leave-request', 'EmployeeLeaveController@index')->name('leave_request');

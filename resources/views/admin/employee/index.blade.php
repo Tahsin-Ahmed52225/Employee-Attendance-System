@@ -76,7 +76,7 @@
                                         <td>
 
                                             <div class="row">
-                                                <div class="col d-flex align-items-center justify-content-between">
+                                                <div class="col d-flex align-items-center justify-content-center">
                                                     <a
                                                         href="{{ route('admin.office_days', ['id' => encrypt($values->id)]) }}">
                                                         <button class="btn btn-sm btn-primary">View Details</button>
@@ -84,13 +84,44 @@
 
                                                 </div>
                                                 <div class="col d-flex align-items-center justify-content-between"
-                                                    onclick="deleteMember({!! $values->id !!})">
+                                                    data-toggle="modal" data-target="#exampleModal{{$values->id}}">
                                                     <i class="fas fa-trash-alt p_icon"></i>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+
+                                    {{-- delete modal starts --}}
+                                    <!-- Button trigger modal -->
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal{{$values->id}}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Disclamer</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this member?<br>
+                                                    <b> Deleting this member will delete all the details of this member</b>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        onclick="deleteMember({!! $values->id !!})"
+                                                        data-dismiss="modal">Yes,Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @php $i++; @endphp
+                                    {{-- delete modal ends --}}
                                 @endforeach
                             </tbody>
                         </table>
@@ -106,8 +137,6 @@
 @endsection
 
 @section('scripts')
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
     <!--begin::Page Vendors(used by this page)-->
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors-->
@@ -115,12 +144,4 @@
     <script src="{{ asset('assets/js/pages/crud/datatables/data-sources/html.js') }}"></script>
     <!--end::Page Scripts-->
     <script src="{{ asset('dev-assets/js/update-member.js') }}"></script>
-
-    <script>
-        $(document).on('click', '.toggle', function() {
-            let id = $(this).children(".switchT").attr("data-user");
-            let stage = $(this).children(".switchT").attr("checked");
-            switchT(id, stage);
-        });
-    </script>
 @endsection

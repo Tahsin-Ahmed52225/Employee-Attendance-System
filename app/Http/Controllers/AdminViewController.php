@@ -15,7 +15,7 @@ class AdminViewController extends Controller
     {
         if ($request->isMethod("GET")) {
             $user_id = decrypt($id);
-            if (User::find($user_id)) {
+            if (User::where('id',$user_id)->first()) {
                 //Office Days
                 $office_days = Timer::where('user_id', $user_id)
                     ->where('check_in', '!=', null)
@@ -44,10 +44,12 @@ class AdminViewController extends Controller
                 $leave = OfficeLeave::where('user_id', $user_id)
                     ->where('leave_status', '=', 'accepted')
                     ->get();
-                return view("admin.daily_report.office_days", ['office_days' => $office_days, 'home_office' => $home_office, 'absent' => $absent, 'leave' => $leave, 'user' => User::find($user_id)]);
+                return view("admin.daily_report.office_days", ['office_days' => $office_days, 'home_office' => $home_office, 'absent' => $absent, 'leave' => $leave, 'user' => User::where('id',$user_id)->first()]);
             } else {
                 return redirect()->back()->with('error', 'User not found');
             }
+        }else{
+            return redirect()->back();
         }
     }
     public function viewProfile(Request $request, $id)

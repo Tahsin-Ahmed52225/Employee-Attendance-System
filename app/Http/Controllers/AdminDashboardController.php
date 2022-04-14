@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\HomeOffice;
 use App\OfficeLeave;
 use App\Timer;
+use App\Helpers;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AdminDashboardController extends Controller
 {
@@ -28,14 +31,15 @@ class AdminDashboardController extends Controller
 
             $employee_on_leave = OfficeLeave::where(function ($query) {
                 $query->where('leave_days', 1)
-                    ->whereDate('leave_starting_date', '=', now()->toDateString());
+                    ->whereDate('leave_starting_date', '=', now()->toDateString())
+                    ->where('leave_description.leave_status', '=', 'accepted');
             })
                 ->orWhere(function ($query) {
                     $query->where('leave_days', '>', 1)
                         ->whereDate('leave_starting_date', '<=', now()->toDateString())
-                        ->whereDate('leave_ending_date', '>=', now()->toDateString());
+                        ->whereDate('leave_ending_date', '>=', now()->toDateString())
+                        ->where('leave_description.leave_status', '=', 'accepted');
                 })
-                ->where('leave_description.leave_status', '=', 'accepted')
                 ->join('users', 'users.id', '=', 'leave_description.user_id')
                 ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image']);
@@ -43,14 +47,16 @@ class AdminDashboardController extends Controller
 
             $employee_on_home_office = HomeOffice::where(function ($query) {
                 $query->where('ho_days', 1)
-                    ->whereDate('ho_starting_date', '=', now()->toDateString());
+                    ->whereDate('ho_starting_date', '=', now()->toDateString())
+                    ->where('homeoffice.ho_status', '=', 'accepted');
             })
                 ->orWhere(function ($query) {
                     $query->where('ho_days', '>', 1)
                         ->whereDate('ho_starting_date', '<=', now()->toDateString())
-                        ->whereDate('ho_ending_date', '>=', now()->toDateString());
+                        ->whereDate('ho_ending_date', '>=', now()->toDateString())
+                        ->where('homeoffice.ho_status', '=', 'accepted');
                 })
-                ->where('homeoffice.ho_status', '=', 'accepted')
+
                 ->join('users', 'users.id', '=', 'homeoffice.user_id')
                 ->where('users.role', '!=', 'admin')
                 ->get(['users.name', 'users.position', 'users.id', 'users.image',]);

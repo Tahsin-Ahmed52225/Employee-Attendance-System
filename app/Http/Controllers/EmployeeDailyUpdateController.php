@@ -45,10 +45,14 @@ class EmployeeDailyUpdateController extends Controller
             $update = Timer::find(decrypt($id));
             if ($update) {
                 if ($update->user_id == Auth::user()->id) {
-                    $update->daily_update = $request->description;
-                    $update->update_status = true;
-                    $update->save();
-                    return redirect()->back()->with('success', 'Updated Successfully');
+                    if ($request->description == "") {
+                        return redirect()->back()->with('warning', 'Update field is required');
+                    } else {
+                        $update->daily_update = $request->description;
+                        $update->update_status = true;
+                        $update->save();
+                        return redirect()->back()->with('success', 'Updated Successfully');
+                    }
                 } else {
                     return redirect()->back()->with('warning', 'Unauthorized Access');
                 }

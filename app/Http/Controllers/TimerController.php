@@ -87,7 +87,7 @@ class TimerController extends Controller
                     $timer->daily_update = $request->description;
                     //Getting the check in time in string
                     $check_in_time = $timer->check_in;
-                    $timer->status = Helpers::check_out_status(Carbon::parse($check_in_time)->format('h:i A'), $timer->total_time, $request->type);
+                    $timer->status = Helpers::check_out_status(Carbon::parse($check_in_time)->format('h:i:s'), $timer->total_time, $request->type);
                     $timer->save();
                     $msg = "<div class='alert alert-success fade show' role='alert'>"
                         . $request->hr . " Hour " . $request->min . " Min added to today

@@ -22,33 +22,39 @@ class EmployeeDashboardController extends Controller
         // } else {
         //     $in_office = false;
         // }
+
         //Check if user is in leave
-        $leave = OfficeLeave::where('user_id', auth()->user()->id)
-            ->where('leave_status', 'accepted')
-            ->where(function ($query) {
-                $query->where('leave_days', 1)
-                    ->whereDate('leave_starting_date', '=', now()->toDateString());
-            })
+        $leave = OfficeLeave::where(function ($query) {
+            $query->where('leave_days', 1)
+                ->where('user_id', auth()->user()->id)
+                ->whereDate('leave_starting_date', '=', now()->toDateString())
+                ->where('leave_status', 'accepted');
+        })
             ->orWhere(function ($query) {
                 $query->where('leave_days', '>', 1)
+                    ->where('user_id', auth()->user()->id)
                     ->whereDate('leave_starting_date', '<=', now()->toDateString())
-                    ->whereDate('leave_ending_date', '>=', now()->toDateString());
+                    ->whereDate('leave_ending_date', '>=', now()->toDateString())
+                    ->where('leave_status', 'accepted');
             })
             ->get();
+        //   dd($leave);
 
 
 
         // Check if user is in Home Office
-        $home_office = HomeOffice::where('user_id', auth()->user()->id)
-            ->where('ho_status', 'accepted')
-            ->where(function ($query) {
-                $query->where('ho_days', 1)
-                    ->whereDate('ho_starting_date', '=', now()->toDateString());
-            })
+        $home_office = HomeOffice::where(function ($query) {
+            $query->where('ho_days', 1)
+                ->where('user_id', auth()->user()->id)
+                ->where('ho_status', 'accepted')
+                ->whereDate('ho_starting_date', '=', now()->toDateString());
+        })
             ->orWhere(function ($query) {
                 $query->where('ho_days', '>', 1)
+                    ->where('user_id', auth()->user()->id)
                     ->whereDate('ho_starting_date', '<=', now()->toDateString())
-                    ->whereDate('ho_ending_date', '>=', now()->toDateString());
+                    ->whereDate('ho_ending_date', '>=', now()->toDateString())
+                    ->where('ho_status', 'accepted');
             })
             ->get();
 
@@ -72,12 +78,17 @@ class EmployeeDashboardController extends Controller
         //days without checkouts
         $pending_checkout = Timer::where('user_id', auth()->user()->id)
             ->where('daily_update', null)
-            ->where('check_out', null)
-            ->where('status', '==', 'Pending')
+            ->where('status', 'Pending')
             ->get();
 
+        $total_office = count(Timer::where('user_id', auth()->user()->id)
+            ->where('status', '!=', 'Pending')
+            ->where('status', '!=', 'Absent')
+            ->where('daily_update', '!=', null)
+            ->get());
 
-        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office, 'office_holidays' => $office_holidays, 'pending_update' => $pending_update, 'pending_checkout' => $pending_checkout]);
+
+        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office, 'office_holidays' => $office_holidays, 'pending_update' => $pending_update, 'pending_checkout' => $pending_checkout, 'total_office' => $total_office]);
     }
     public function pendingUpdate(Request $request)
     {

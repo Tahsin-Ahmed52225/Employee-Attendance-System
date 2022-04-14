@@ -38,7 +38,6 @@
                                     <tr>
                                         <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
                                         <td>{{ $item->name }}</td>
-                                        </td>
                                         <td>
                                             <span class="badge bg-danger text-white">Absent</span>
                                         </td>

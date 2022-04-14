@@ -33,6 +33,11 @@ class SettingController extends Controller
                     $settings->value = $request->office_hours;
                     $settings->save();
                 }
+                if ($request->office_weekends) {
+                    $settings = Settings::where('name', 'office_weekends')->first();
+                    $settings->value = $request->office_weekends;
+                    $settings->save();
+                }
                 // dd(Cache::get('settings'));
                 return redirect()->back()->with('success', 'Settings updated successfully');
             } else {

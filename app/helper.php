@@ -33,7 +33,7 @@ class Helpers
     {
         $status = '';
         if ($type == 'TIMER') {
-            if (strtotime($check_in_time) < strtotime(self::settings('office_time_starts'))) {
+            if (strtotime($check_in_time) > strtotime(self::settings('office_time_starts'))) {
                 $status = $status . 'Late,';
             }
             $office_hour_in_mins = self::settings('office_hours');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeProfileController extends Controller
 {
@@ -45,6 +46,20 @@ class EmployeeProfileController extends Controller
             }
         } else {
             return redirect()->back()->with("rejected", "Something went wrong ! Try again");
+        }
+    }
+    public function changePassword(Request $request)
+    {
+        $user = Auth::user();
+        if ($request->isMethod("GET")) {
+
+            return view("employee.change_password", ['user' => $user]);
+        } else {
+
+            $new_password = $request->new_password;
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return redirect()->route("employee.change_password")->with("success", "Password Updated Succesfully");
         }
     }
 }

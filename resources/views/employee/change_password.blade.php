@@ -11,6 +11,18 @@
         <div>
             <!--begin::Container-->
             <div class="container">
+                @if (session()->has('success'))
+                    <div class="alert alert-custom alert-light-success fade show mb-5 d-flex py-2" role="alert">
+                        <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
+                        <div class="alert-text">{{ session()->get('success') }}
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
                 <!--begin::Profile Account Information-->
                 <div class="row ">
                     <div class="col-md-4 col-sm-12 ">
@@ -96,7 +108,7 @@
                             <div class="card-header py-5">
                                 <div class="card-title w-100 justify-content-between">
                                     <div class="float-left">
-                                        <h3 class="card-label font-weight-bolder text-dark">Account Information</h3>
+                                        <h3 class="card-label font-weight-bolder text-dark">Change Password</h3>
                                     </div>
                                     <div> <a href="{{ route('employee.edit_profile') }}"> <button
                                                 class="btn btn-sm btn-primary ">Edit Profile</button> </a> </div>
@@ -106,58 +118,28 @@
                             </div>
                             <!--end::Header-->
                             <!--begin::Form-->
-                            <form class="form">
+                            <form class="form" action="{{ route('employee.change_password') }}" method="post">
+                                @csrf
                                 <div class="card-body">
                                     <!--begin::Form Group-->
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
+                                        <label class="col-xl-3 col-lg-3 col-form-label">New Password</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <div class="">
-                                                <input class="form-control form-control-lg form-control-solid" type="text"
-                                                    value="{{ $user->name }}" disabled />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--begin::Form Group-->
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group input-group-lg input-group-solid">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="la la-at"></i>
-                                                    </span>
+
+                                            <div class="input-group mb-4">
+                                                <input type="password" class="form-control password" name="new_password"
+                                                    placeholder="Enter new Password" aria-describedby="basic-addon2" />
+                                                <div class="input-group-append"><span class="input-group-text"><i
+                                                            class="flaticon-medical icon-lg"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control form-control-lg form-control-solid"
-                                                    value="{{ $user->email }}" disabled />
                                             </div>
+                                            <button class="btn btn-sm btn-primary">Change Password</button>
+
                                         </div>
                                     </div>
+
                                     <!--begin::Form Group-->
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Contact Number</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group input-group-lg input-group-solid">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="la la-phone"></i>
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control form-control-lg form-control-solid"
-                                                    value="{{ $user->number }}" disabled />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--begin::Form Group-->
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Position </label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group input-group-lg input-group-solid">
-                                                <input type="text" class="form-control form-control-lg form-control-solid"
-                                                    value="{{ $user->position }}" disabled />
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                             </form>
@@ -177,4 +159,13 @@
 @section('scripts')
     <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
+    <script>
+        $(".input-group-append").on("click", () => {
+            if ($('.password').attr('type') == "password") {
+                $('.password').attr('type', 'text');
+            } else {
+                $('.password').attr('type', 'password');
+            }
+        });
+    </script>
 @endsection

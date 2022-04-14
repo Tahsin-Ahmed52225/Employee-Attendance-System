@@ -34,10 +34,12 @@ class TimesheetController extends Controller
             $AbsentList = Timer::where('status', '=', 'Absent')
                 ->join('users', 'users.id', '=', 'timesheet.user_id')
                 ->where('users.role', '=', 'employee')
-                ->orderBy('timesheet.check_in', 'DESC')
-                ->get(['users.name', 'timesheet.check_in', 'timesheet.check_out', 'timesheet.total_time', 'timesheet.status']);
+                ->orderBy('timesheet.created_at', 'desc')
+                ->get(['users.name', 'timesheet.created_at', 'timesheet.status']);
 
             return view("admin.in_and_out.absent", ['AbsentList' => $AbsentList]);
+        }else{
+            return redirect()->back();
         }
     }
     public function pending(Request $request)

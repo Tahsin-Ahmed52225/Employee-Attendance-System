@@ -117,8 +117,6 @@
                 </div>
                 <!--end::Brand-->
                 <!--begin::Aside Menu-->
-                <span id="time_title" class="ml-3"
-                    style="color:white; font-size:30px;text-align:center"></span></a>
                 <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
                     <!--begin::Menu Container-->
                     <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1"
@@ -228,15 +226,6 @@
                                             <span class="menu-link">
                                                 <span class="menu-text">Applications</span>
                                             </span>
-                                        </li>
-                                        <li class="menu-item menu-item-submenu" aria-haspopup="true"
-                                            data-menu-toggle="hover">
-                                            <a href="{{ route('admin.in_and_out') }}" class="menu-link menu-toggle">
-                                                <i class="menu-bullet menu-bullet-line">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">App : In & Out</span>
-                                            </a>
                                         </li>
                                         <li class="menu-item menu-item-submenu" aria-haspopup="true"
                                             data-menu-toggle="hover">
