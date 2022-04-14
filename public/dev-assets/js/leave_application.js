@@ -25,7 +25,7 @@ function minForLeave(number_of_leave_days) {
 
     var t_date = new Date();
 
-    t_date.setDate(t_date.getDate() + Number(number_of_leave_days));
+    t_date.setDate(t_date.getDate() + Number(number_of_leave_days)-1);
 
 
     var t_day = ("0" + t_date.getDate()).slice(-2);
@@ -49,7 +49,7 @@ window.onload = (event) => {
             minForLeave(event.target.value);
             $("#starting_date").on("change", (event) => {
                 var t_date = new Date(event.target.value);
-                t_date.setDate(t_date.getDate() + Number(number_of_leave_days));
+                t_date.setDate(t_date.getDate() + Number(number_of_leave_days)-1);
                 var t_day = ("0" + t_date.getDate()).slice(-2);
                 var t_month = ("0" + (t_date.getMonth() + 1)).slice(-2);
                 var tomorrow = t_date.getFullYear() + "-" + (t_month) + "-" + (t_day);
