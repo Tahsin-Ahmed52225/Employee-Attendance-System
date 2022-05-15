@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Freequently Asked Question</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="puzzle">
+	  <div class="heading">
+	    <span>
+	      <sub>★</sub> <sup>☆</sup> <sub>★</sub> <sup>☆</sup> <sub>★</sub> <sup>☆</sup> <sub>★</sub>
+	    </span>
+	    <h2>TheDevGarden Bank</h2>
+	    <span>
+	      <sup>★</sup> <sub>☆</sub> <sup>★</sup> <sub>☆</sub> <sup>★</sup> <sub>☆</sub> <sup>★</sup>
+	    </span>
+	  </div>
+	  <div class="answer"></div>
+	  <div class="grid">
+	    <button class="tile tile--1" style="--area:A"></button>
+	    <button class="tile tile--2" style="--area:B"></button>
+	    <button class="tile tile--3" style="--area:C"></button>
+	    <button class="tile tile--4" style="--area:D"></button>
+	    <button class="tile tile--5" style="--area:E"></button>
+	    <button class="tile tile--6" style="--area:F"></button>
+	    <button class="tile tile--7" style="--area:G"></button>
+	    <button class="tile tile--8" style="--area:H"></button>
+	    <div class="tile tile--empty" style="--area:I"></div>
+	  </div>
+	</div>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+    <script src='https://unpkg.com/animate-css-grid@latest'></script><script  src="script.js"></script>
+
+  </body>
+</html>
