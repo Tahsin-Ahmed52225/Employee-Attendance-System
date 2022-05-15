@@ -1,4 +1,20 @@
 window.onload = function () {
+    function get_time_duration() {
+        var now = new Date();
+        $.ajax({
+            type: 'GET',
+            url: '/get-time-duration',
+            success: function (data) {
+
+
+            },
+            error: function (data) {
+                console.log("Error:");
+                console.log(data);
+            },
+        });
+
+    }
     function checkin() {
         $.ajax({
             headers: {
@@ -115,6 +131,7 @@ window.onload = function () {
     }
     //continue timer on other pages
     if (dashboard == null && localStorage.getItem('start_button') != null) {
+
         sec = localStorage.getItem('sec');
         min = localStorage.getItem('min');
         hr = localStorage.getItem('hr');

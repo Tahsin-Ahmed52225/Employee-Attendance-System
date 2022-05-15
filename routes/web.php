@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     //App:In & Out
     Route::post('/check-in', 'TimerController@checkIn')->name('check_in');
     Route::post('/check-out', 'TimerController@checkOut')->name('check_out');
+    Route::post('/get-time-duration', 'TimerController@getTimeDuration')->name('get_time_duration');
 });
 
 ##############################################################   Admin Routes    ############################################################

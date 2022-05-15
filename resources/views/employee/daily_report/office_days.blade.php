@@ -16,8 +16,8 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">Office Days</a></li>
                 <li><a data-toggle="tab" href="#menu1">Absent</a></li>
-                <li><a data-toggle="tab" href="#menu2">Home Office</a></li>
-                <li><a data-toggle="tab" href="#menu3">Office Leave</a></li>
+                <li><a data-toggle="tab" href="#menu2">Office Leave</a></li>
+                <li><a data-toggle="tab" href="#menu3">Home Office</a></li>
             </ul>
 
             <div class="tab-content">
@@ -43,14 +43,12 @@
                                             <td>{{ \Carbon\Carbon::parse($item->check_out)->format('h:i A') }}</td>
                                             <td>
                                                 @php
-                                                    if ($item->status == 'Pending') {
-                                                        echo '<span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill">Pending</span>';
-                                                    } else {
+
                                                         $badge = App\Helpers::stringToBadge($item->status);
                                                         foreach ($badge as $key => $value) {
                                                             echo $value;
                                                         }
-                                                    }
+
                                                 @endphp
                                             </td>
                                         </tr>
@@ -79,16 +77,7 @@
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
                                             <td>
-                                                @php
-                                                    if ($item->status == 'Pending') {
-                                                        echo '<span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill">Pending</span>';
-                                                    } else {
-                                                        $badge = App\Helpers::stringToBadge($item->status);
-                                                        foreach ($badge as $key => $value) {
-                                                            echo $value;
-                                                        }
-                                                    }
-                                                @endphp
+                                                <span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill">Absent</span>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -121,7 +110,7 @@
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($item->leave_starting_date)->format('d M Y') }}
                                             </td>
-                                            <td>{{ \Carbon\Carbon::parse($item->leave_ending_date)->format('h:i A') }}
+                                            <td>@if($item->leave_ending_date != null){{ \Carbon\Carbon::parse($item->leave_ending_date)->format('h:i A')}} @else - @endif
                                             </td>
                                             <td>{{ $item->leave_days }}</td>
                                             <td>{{ $item->leave_description }}</td>
@@ -163,9 +152,9 @@
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($item->ho_starting_date)->format('d M Y') }}
                                             </td>
-                                            <td>{{ \Carbon\Carbon::parse($item->ho_ending_date)->format('h:i A') }}
+                                            <td> @if($item->ho_ending_date != null){{ \Carbon\Carbon::parse($item->ho_ending_date)->format('h:i A') }} @else - @endif
                                             </td>
-                                            <td>{{ \Carbon\Carbon::parse($item->ho_days)->format('h:i A') }}</td>
+                                            <td>{{ $item->ho_day }}</td>
                                             <td>{{ $item->ho_description }}</td>
                                             <td>
                                                 @php
