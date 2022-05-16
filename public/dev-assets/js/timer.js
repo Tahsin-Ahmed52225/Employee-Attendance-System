@@ -1,12 +1,23 @@
 window.onload = function () {
+    value = $('#time_msg').data('clicked');
+
+    if (value != 0) {
+        localStorage.setItem('start_button', 'clicked');
+        $('#end_button').attr('disabled', false);
+    } else {
+        localStorage.clear();
+        $('#end_button').attr('disabled', true);
+    }
     function get_time_duration() {
-        var now = new Date();
         $.ajax({
             type: 'GET',
             url: '/get-time-duration',
             success: function (data) {
-
-
+                time_du = data.time;
+                hr = Math.floor(time_du / 3600); // get hours
+                min = Math.floor((time_du - (hr * 3600)) / 60); // get minutes
+                sec = time_du - (hr * 3600) - (min * 60); //  get seconds
+                timerCycle();
             },
             error: function (data) {
                 console.log("Error:");
@@ -132,16 +143,11 @@ window.onload = function () {
     //continue timer on other pages
     if (dashboard == null && localStorage.getItem('start_button') != null) {
 
-        sec = localStorage.getItem('sec');
-        min = localStorage.getItem('min');
-        hr = localStorage.getItem('hr');
-        timerCycle();
+        get_time_duration();
+
         //continue timer on coming back Dashboard
     } else if (dashboard != null && localStorage.getItem('start_button') != null) {
-        sec = localStorage.getItem('sec');
-        min = localStorage.getItem('min');
-        hr = localStorage.getItem('hr');
-        timerCycle();
+        get_time_duration();
     }
     function timerCycle() {
         sec = parseInt(sec);
@@ -170,11 +176,6 @@ window.onload = function () {
             hr = '0' + hr;
         }
 
-        localStorage.setItem('hr', hr);
-        localStorage.setItem('min', min);
-        localStorage.setItem('sec', sec);
-        // console.log(timer);
-        // console.log(timer.innerHTML);
 
         if (dashboard == null && localStorage.getItem('start_button') != null) {
             var side_timer = document.getElementById('time_title');

@@ -7,7 +7,7 @@
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid " id="kt_content">
     <div id="page_name" class="container">
-        <div id="time_msg"></div>
+        <div id="time_msg" data-clicked = {{ $checked_in }}></div>
         {{-- @if ($in_office) --}}
         @if( \Carbon\Carbon::now()->dayOfWeek == App\Helpers::settings('office_weekends'))
         <div class="row">

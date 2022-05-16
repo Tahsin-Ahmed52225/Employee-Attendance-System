@@ -38,7 +38,7 @@ class TimesheetController extends Controller
                 ->get(['users.name', 'timesheet.created_at', 'timesheet.status']);
 
             return view("admin.in_and_out.absent", ['AbsentList' => $AbsentList]);
-        }else{
+        } else {
             return redirect()->back();
         }
     }
@@ -57,33 +57,37 @@ class TimesheetController extends Controller
     public function pending_clearence(Request $request, $id)
     {
         if ($request->isMethod("POST")) {
-            $timer = Timer::where('id', decrypt($id))->first();
-            if ($timer) {
-                if ($request->data == "approve") {
-                    //Updating the checkout time
-                    $time = explode(':', $request->office_time_ends);
-                    $check_out_timer = Carbon::parse($timer->check_out);
-                    $check_out_timer->hour   = $time[0];
-                    $check_out_timer->minute = $time[1];
-                    $check_out_timer->second = $time[2];
-                    $timer->check_out = $check_out_timer->toDateTimeString();
-                    $timer->total_time = $check_out_timer->diffInMinutes($timer->check_in, true);
-                    $timer->status = Helpers::check_out_status(Carbon::parse($timer->check_in)->format('h:i A'), $timer->total_time, 'TIMER');
-                    $timer->save();
-                } else if ($request->data == "HO") {
-                    $timer->status = $request->data;
-                    $timer->save();
-                } else {
-                    $timer->status = $request->data;
-                    $timer->check_in = null;
-                    $timer->check_out = null;
-                    $timer->save();
-                }
-
-
-                return redirect()->back()->with('success', 'Pending Clearence Successfully');
+            if ($request->data == null) {
+                return redirect()->back()->with('warning', 'Please select a valid option');
             } else {
-                return redirect()->back()->with('error', 'Something went wrong');
+                $timer = Timer::where('id', decrypt($id))->first();
+                if ($timer) {
+                    if ($request->data == "approve") {
+                        //Updating the checkout time
+                        $time = explode(':', $request->office_time_ends);
+                        $check_out_timer = Carbon::parse($timer->check_out);
+                        $check_out_timer->hour   = $time[0];
+                        $check_out_timer->minute = $time[1];
+                        $check_out_timer->second = $time[2];
+                        $timer->check_out = $check_out_timer->toDateTimeString();
+                        $timer->total_time = $check_out_timer->diffInMinutes($timer->check_in, true);
+                        $timer->status = Helpers::check_out_status(Carbon::parse($timer->check_in)->format('h:i A'), $timer->total_time, 'TIMER');
+                        $timer->save();
+                    } else if ($request->data == "HO") {
+                        $timer->status = $request->data;
+                        $timer->save();
+                    } else {
+                        $timer->status = $request->data;
+                        $timer->check_in = null;
+                        $timer->check_out = null;
+                        $timer->save();
+                    }
+
+
+                    return redirect()->back()->with('success', 'Pending Clearence Successfully');
+                } else {
+                    return redirect()->back()->with('rejected', 'Something went wrong');
+                }
             }
         } else {
             return redirect()->back();

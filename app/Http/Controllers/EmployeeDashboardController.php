@@ -87,8 +87,14 @@ class EmployeeDashboardController extends Controller
             ->where('daily_update', '!=', null)
             ->get());
 
+        $checked_in = count(Timer::where('user_id', auth()->user()->id)
+            ->whereDate('check_in', '=', now())
+            ->where('check_out', '=', null)
+            ->get());
+        //dd($checked_in);
 
-        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office, 'office_holidays' => $office_holidays, 'pending_update' => $pending_update, 'pending_checkout' => $pending_checkout, 'total_office' => $total_office]);
+
+        return view('employee.dashboard', ['leave' => $leave, 'home_office' => $home_office, 'office_holidays' => $office_holidays, 'pending_update' => $pending_update, 'pending_checkout' => $pending_checkout, 'total_office' => $total_office, 'checked_in' => $checked_in]);
     }
     public function pendingUpdate(Request $request)
     {

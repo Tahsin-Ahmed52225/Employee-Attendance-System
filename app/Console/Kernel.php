@@ -100,7 +100,7 @@ class Kernel extends ConsoleKernel
                     }
                 }
             }
-        })->dailyAt('20:00');
+        })->everyMinute();;
     }
 
     /**

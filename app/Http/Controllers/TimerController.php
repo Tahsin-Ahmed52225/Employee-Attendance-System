@@ -125,12 +125,13 @@ class TimerController extends Controller
             return response()->json(array('msg' => $msg, 'stage' => false), 200);
         }
     }
-    public function getTimeDuration($request)
+    public function getTimeDuration(Request $request)
     {
         if ($request->ajax()) {
-            $current_time = now()->timestamp;
-            $check_in_time = Timer::whereDate('check_in', now())->where('user_id', Auth::user()->id)->first();
-            return response()->json(array('time' => $request->time), 200);
+            $current_time = now();
+            $check_in_time = Timer::whereDate('check_in', now())->where('user_id', Auth::user()->id)->get('check_in');
+            $totalDuration = $current_time->diffInSeconds($check_in_time[0]->check_in);
+            return response()->json(array('time' => $totalDuration), 200);
         }
     }
 }
