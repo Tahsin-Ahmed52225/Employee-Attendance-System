@@ -56,34 +56,30 @@ class Kernel extends ConsoleKernel
                     if (count($office_holidays) == 0) {
                         //Check if today is holiday
                         if (now()->dayOfWeek != Helpers::settings('office_weekends')) {
-                            $leave = DB::table('leave_description')
+                            $leave = DB::table('leave_description')->where('user_id', $person->id)
 
                                 ->where(function ($query) {
 
                                     $query->where('leave_days', 1)
-                                        ->where('user_id', $person->id)
                                         ->where('leave_status', 'accepted')
                                         ->whereDate('leave_starting_date', '=', now()->toDateString());
                                 })
                                 ->orWhere(function ($query) {
                                     $query->where('leave_days', '>', 1)
-                                        ->where('user_id', $person->id)
                                         ->where('leave_status', 'accepted')
                                         ->whereDate('leave_starting_date', '<=', now()->toDateString())
                                         ->whereDate('leave_ending_date', '>=', now()->toDateString());
                                 })
                                 ->get();
 
-                            $home_office = DB::table('homeoffice')
+                            $home_office = DB::table('homeoffice')->where('user_id',  $person->id)
                                 ->where(function ($query) {
                                     $query->where('ho_days', 1)
-                                        ->where('user_id',  $person->id)
                                         ->where('ho_status', 'accepted')
                                         ->whereDate('ho_starting_date', '=', now()->toDateString());
                                 })
                                 ->orWhere(function ($query) {
                                     $query->where('ho_days', '>', 1)
-                                        ->where('user_id',  $person->id)
                                         ->where('ho_status', 'accepted')
                                         ->whereDate('ho_starting_date', '<=', now()->toDateString())
                                         ->whereDate('ho_ending_date', '>=', now()->toDateString());

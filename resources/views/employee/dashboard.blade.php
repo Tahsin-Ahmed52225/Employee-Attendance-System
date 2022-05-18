@@ -2,6 +2,7 @@
 @section('links')
 <!--begin::Page Vendors Styles(used by this page)-->
 <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ asset('dev-assets/js/timer.js') }}" type="text/javascript" charset="utf-8" async defer></script>
 <!--end::Page Vendors Styles-->
 @endsection
 @section('content')
