@@ -50,6 +50,11 @@
                             </div>
                         </div>
                     @endif
+                    <div class="card card-custom text-white" style="background:#1E1E2D;">
+                           <div class="card-body">
+                               Hello
+                           </div>
+                    </div>
                     @include('employee.daily_report.data')
                 </div>
                 <div class="ajax-load text-center" style=" display: none;">
