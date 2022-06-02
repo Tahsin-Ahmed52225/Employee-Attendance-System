@@ -5,6 +5,7 @@
         type="text/css" />
     <link rel="stylesheet" href="{{ asset('dev-assets/css/daily_update.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.0/tinymce.min.js"></script>
+
     <!--end::Page Vendors Styles-->
 @endsection
 @section('content')
@@ -50,12 +51,162 @@
                             </div>
                         </div>
                     @endif
-                    <div class="card card-custom text-white" style="background:#1E1E2D;">
-                           <div class="card-body">
-                               Hello
-                           </div>
-                    </div>
-                    @include('employee.daily_report.data')
+
+                        <div class="row">
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select class="form-control" id="MonthSelect">
+                                                    <option selected value="">Choose Month</option>
+                                                    <option value=1>January</option>
+                                                    <option value=2>February</option>
+                                                    <option value=3>March</option>
+                                                    <option value=4>April</option>
+                                                    <option value=5>May</option>
+                                                    <option value=6>June</option>
+                                                    <option value=7>July</option>
+                                                    <option value=8>August</option>
+                                                    <option value=9>Sepember</option>
+                                                    <option value=10>Octorber</option>
+                                                    <option value=11>November</option>
+                                                    <option value=12>December</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <select class="form-control" id="YearSelect">
+                                                    <option selected value="">Choose Year</option>
+                                                    <option value={{  Carbon\Carbon::now()->year-2 }}>{{  Carbon\Carbon::now()->year-2 }}</option>
+                                                    <option value={{ Carbon\Carbon::now()->year-1}}>{{  Carbon\Carbon::now()->year-1 }}</option>
+                                                    <option value={{ Carbon\Carbon::now()->year}}>{{  Carbon\Carbon::now()->year }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" id="get_data">Get Data</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="float-right">
+                                                <button class="btn btn-primary" id="get_data"><i class="flaticon2-refresh-arrow icon-lg"></i></button>
+                                                <button class="btn btn-primary" id="get_data"><i class="flaticon2-print icon-lg"></i></button>
+                                            </div>
+                                        </div>
+                            </div>
+
+
+
+{{-------------------------------------------------------------- All daily update starts  -------------------------------------------------------------}}
+
+                            @foreach ($updates as $item)
+                                <div class="card mb-2 update_card">
+                                    <div class="card-header ">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <div style="font-size:12px; font-weight:700;">{{ $item->name }} -
+                                                    <span style="font-weight: 500;">
+                                                        {{ \Carbon\Carbon::parse($item->check_out)->format('d M Y') }} at
+                                                        {{ \Carbon\Carbon::parse($item->check_out)->format('h:i') }}
+                                                    </span>
+                                                    <span>
+                                                        @if ($item->update_status)
+                                                            <span class="badge badge-pill badge-success">updated</span>
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card-toolbar float-right">
+                                                    <div class="dropdown dropdown-inline">
+                                                        <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">
+                                                            <i class="ki ki-bold-more-hor"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu p-0 m-0 dropdown-menu-sm">
+                                                            <!--begin::Navigation-->
+                                                            <ul class="navi navi-hover">
+                                                                <li class="navi-item" data-toggle="modal"
+
+                                                                    data-target=".exampleModalCenter">
+                                                                    <a href="#" class="navi-link" data-itemID="{{ $item->id }}">
+                                                                        <i class="flaticon-edit mr-2" data-itemID="{{ $item->id }}"></i>
+                                                                        Edit
+                                                                    </a>
+                                                                </li>
+                                                                <li class="navi-item">
+                                                                    <a href="#" class="navi-link">
+                                                                        <i class="flaticon2-gear mr-2"></i>
+                                                                        <span>Settings</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                            <!--end::Navigation-->
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div style="font-size:12px;">
+                                            {!! $item->daily_update !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        {{-- Update Daily Update Starts --}}
+                        <div class="modal fade exampleModalCenter" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered update_card" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">
+                                            Update</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="was-validated" method="POST"
+                                            action="{{ route('employee.update_task', encrypt($item->id)) }}">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <textarea class="kt-tinymce-3" name="description" placeholder="message" required>
+                                                    {{ $item->description }}
+                                                </textarea>
+                                                @error('details')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button"
+                                            class="btn btn-primary submit_btn" data-dismiss="modal">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Update Daily Update Ends --}}
+{{-------------------------------------------------------------- All daily update ends  -------------------------------------------------------------}}
                 </div>
                 <div class="ajax-load text-center" style=" display: none;">
                     <p><img style="height:100px;" src="{{ asset('images/loader.gif') }}">Loading More</p>
@@ -70,54 +221,36 @@
     <script src="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/pages/widgets.js') }}"></script>
     <script>
-        // Initialization
-        jQuery(document).ready(function() {
-            KTTinymce.init();
-        });
-    </script>
-    <script>
-        function loadMoreData(page) {
-            $.ajax({
-                    url: '?page=' + page,
-                    type: "get",
-                    datatype: "html",
-                    beforeSend: function() {
-                        $('.ajax-load').show();
-                    }
+        // Class definition
 
-                }).done(function(data) {
-
-
-                    if (data.html === "" || data.html === " ") {
-                        $('.ajax-load').html('');
-                        $('.ajax-load').hide();
-                        return;
-                    } else {
-
-                        $('#post_data').append(data.html);
-                        $('.ajax-load').hide();
-                    }
-                })
-                .fail(function(jqXHR, ajaxOptions, thrownError) {
-                    //alert('No response from server');
-                    console.log(thrownError);
-                })
-
-
-        }
-        var page = 1;
-        $(document).scroll(function() {
-            if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-                page++;
-                loadMoreData(page);
+        var KTTinymce = function() {
+            // Private functions
+            var demos = function() {
+                tinymce.init({
+                    selector: '.kt-tinymce-3',
+                    menubar: false,
+                    toolbar: ['styleselect fontselect fontsizeselect',
+                        'undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify',
+                        'bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview '
+                    ],
+                    plugins: 'advlist autolink link  lists charmap print preview'
+                });
             }
-        });
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
+        // Initialization
+        KTTinymce.init();
     </script>
     <script>
         $(document).ready(function() {
-            $('.submit_btn').on("click", (e) => {
-                $(`#update_form` + e.target.getAttribute('data-id')).submit();
-            });
+
         });
     </script>
+    <script src="{{ asset("dev-assets/js/sort_project.js") }}"></script>
 @endsection

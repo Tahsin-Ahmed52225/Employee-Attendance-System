@@ -23,15 +23,7 @@ class EmployeeDailyUpdateController extends Controller
             ->where('check_out', "!=", null)
             ->join("users", "users.id", "=", "timesheet.user_id")
             ->orderBy('timesheet.check_out', 'desc')
-            ->paginate(9, ['users.name', 'timesheet.*']);
-        //Infinite scroll for pagination
-        if ($request->ajax()) {
-
-            $view =  view("employee.daily_report.data", compact('updates'))->render();
-            // dd(response()->json(['html' => $view]));
-            return response()->json(['html' => $view]);
-        }
-
+            ->get(['users.name', 'timesheet.*']);
         return view("employee.daily_report.index", ['updates' => $updates]);
     }
     /**

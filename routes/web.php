@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/check-in', 'TimerController@checkIn')->name('check_in');
     Route::post('/check-out', 'TimerController@checkOut')->name('check_out');
     Route::get('/get-time-duration', 'TimerController@getTimeDuration')->name('get_time_duration');
+
+    //Searching route
+    Route::get('/search-dailyupdate', 'SearchController@searchDailyUpdate')->name('searchDailyUpdate');
 });
 
 ##############################################################   Admin Routes    ############################################################
