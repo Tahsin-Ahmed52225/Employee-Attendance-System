@@ -1,9 +1,36 @@
 $(".navi-link").on("click",(e)=>{
-    //console.log(e.target.getAttribute("data-itemID"));
+    var post_id = e.target.getAttribute("data-itemID")
+    //Getting the previous post details
+    $.ajax({
+        url: "/get-post-description",
+        type: "GET",
+        data: {
+            post_id: post_id
+        },
+        success: (data)=>{
+            tinymce.get("update_box").setContent(data);
+        },
+        error: (err)=>{
+            console.log(err);
+        }
+    });
     $('.submit_btn').on("click", (e) => {
-       $.ajax({
-           url: " "
-       })
+        $.ajax({
+            url: "empolyee/update-daily-update/",
+            type: "POST",
+            data: {
+                post_id: post_id,
+                updated_text : tinymce.get("update_box").getContent()
+            },
+            success: (data)=>{
+               console.log(data);
+            },
+            error: (err)=>{
+                console.log(err);
+            }
+        });
+     //  console.log(tinymce.get("update_box").getContent());
+
     });
 });
 

@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-time-duration', 'TimerController@getTimeDuration')->name('get_time_duration');
 
     //Searching route
+    Route::get('/get-post-description', 'SearchController@getPostDescription');
     Route::get('/search-dailyupdate', 'SearchController@searchDailyUpdate')->name('searchDailyUpdate');
 });
 

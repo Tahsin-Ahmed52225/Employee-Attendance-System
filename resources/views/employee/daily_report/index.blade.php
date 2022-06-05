@@ -184,8 +184,7 @@
                                             action="{{ route('employee.update_task', encrypt($item->id)) }}">
                                             @csrf
                                             <div class="mb-3">
-                                                <textarea class="kt-tinymce-3" name="description" placeholder="message" required>
-                                                    {{ $item->description }}
+                                                <textarea id="update_box"  class="kt-tinymce-3" placeholder="message" required>
                                                 </textarea>
                                                 @error('details')
                                                     <span class="invalid-feedback" role="alert">
@@ -231,9 +230,9 @@
                     menubar: false,
                     toolbar: ['styleselect fontselect fontsizeselect',
                         'undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify',
-                        'bullist numlist | outdent indent | blockquote subscript superscript | advlist | autolink | lists charmap | print preview '
+                        'bullist numlist | outdent indent | blockquote subscript superscript | lists charmap | print preview '
                     ],
-                    plugins: 'advlist autolink link  lists charmap print preview'
+                    plugins: 'advlist autolink link  lists charmap '
                 });
             }
 
@@ -246,11 +245,6 @@
         }();
         // Initialization
         KTTinymce.init();
-    </script>
-    <script>
-        $(document).ready(function() {
-
-        });
     </script>
     <script src="{{ asset("dev-assets/js/sort_project.js") }}"></script>
 @endsection
