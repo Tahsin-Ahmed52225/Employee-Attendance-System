@@ -31,28 +31,28 @@ class EmployeeDailyUpdateController extends Controller
      *
      * @return
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        if ($request->isMethod("POST")) {
-            $update = Timer::find(decrypt($id));
+        if ($request->ajax()) {
+            $update = Timer::find($request->post_id);
             if ($update) {
                 if ($update->user_id == Auth::user()->id) {
-                    if ($request->description == "") {
-                        return redirect()->back()->with('warning', 'Update field is required');
+                    if ($request->updated_text == "") {
+                        return response()->json(['stage'=>'warning','msg' => 'Something went wrong']);
                     } else {
-                        $update->daily_update = $request->description;
+                        $update->daily_update = $request->updated_text;
                         $update->update_status = true;
                         $update->save();
-                        return redirect()->back()->with('success', 'Updated Successfully');
+                        return response()->json(['stage'=>'success','msg' => 'Updated successfully']);
                     }
                 } else {
-                    return redirect()->back()->with('warning', 'Unauthorized Access');
+                    return response()->json(['stage'=>'warning','msg' => 'Something went wrong']);
                 }
             } else {
-                return redirect()->back()->with('error', 'Something went wrong');
+                return response()->json(['stage'=>'warning','msg' => 'Something went wrong']);
             }
         } else {
-            return redirect()->back();
+            return response()->json(['stage'=>'warning','msg' => 'Something went wrong']);
         }
     }
     public function officeDays(Request $request)

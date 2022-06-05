@@ -15,7 +15,9 @@
             <!--begin::Container-->
             <div class="container-fluid">
                 <div class="container" id="post_data">
-                    @if (session()->has('success'))
+                    <div id="update_msg">
+                    </div>
+                    {{-- @if (session()->has('success'))
                         <div class="alert alert-custom alert-light-success fade show mb-5 d-flex py-2" role="alert">
                             <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
                             <div class="alert-text">{{ session()->get('success') }}
@@ -50,7 +52,7 @@
                                 </button>
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
 
                         <div class="row">
 
@@ -92,7 +94,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="float-right">
-                                                <button class="btn btn-primary" id="get_data"><i class="flaticon2-refresh-arrow icon-lg"></i></button>
+                                            <a href="{{ route("employee.daily_update") }}"><button class="btn btn-primary" id="get_data"><i class="flaticon2-refresh-arrow icon-lg"></i></button></a>
                                                 <button class="btn btn-primary" id="get_data"><i class="flaticon2-print icon-lg"></i></button>
                                             </div>
                                         </div>
@@ -101,7 +103,7 @@
 
 
 {{-------------------------------------------------------------- All daily update starts  -------------------------------------------------------------}}
-
+                         @if(count($updates)>0)
                             @foreach ($updates as $item)
                                 <div class="card mb-2 update_card">
                                     <div class="card-header ">
@@ -159,52 +161,65 @@
                                     </div>
                                     <div class="card-body">
 
-                                        <div style="font-size:12px;">
+                                        <div id="dailyUpdate{{ $item->id }}" style="font-size:12px;">
                                             {!! $item->daily_update !!}
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
+                            {{-- Update Daily Update Starts --}}
+                                <div class="modal fade exampleModalCenter" tabindex="-1"
+                                role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered update_card" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">
+                                                Update</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="was-validated" method="POST"
+                                                action="{{ route('employee.update_task', encrypt($item->id)) }}">
+                                                @csrf
+                                                <div class="mb-3">
+                                                    <textarea id="update_box"  class="kt-tinymce-3" placeholder="message" required>
+                                                    </textarea>
+                                                    @error('details')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
 
-                        {{-- Update Daily Update Starts --}}
-                        <div class="modal fade exampleModalCenter" tabindex="-1"
-                            role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered update_card" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">
-                                            Update</h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form class="was-validated" method="POST"
-                                            action="{{ route('employee.update_task', encrypt($item->id)) }}">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <textarea id="update_box"  class="kt-tinymce-3" placeholder="message" required>
-                                                </textarea>
-                                                @error('details')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
 
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-
-                                        <button type="button"
-                                            class="btn btn-primary submit_btn" data-dismiss="modal">Update</button>
+                                            <button type="button"
+                                                class="btn btn-primary submit_btn" data-dismiss="modal">Update</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {{-- Update Daily Update Ends --}}
+                            {{-- Update Daily Update Ends --}}
+                        @else
+                            <div class="card mb-2 update_card">
+                                <div class="card-header ">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <div style="font-size:12px; text-align:center">No Data Found
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+
 {{-------------------------------------------------------------- All daily update ends  -------------------------------------------------------------}}
                 </div>
                 <div class="ajax-load text-center" style=" display: none;">

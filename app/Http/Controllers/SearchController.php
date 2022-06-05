@@ -9,8 +9,22 @@ use App\Timer;
 
 class SearchController extends Controller
 {
-    public function searchDailyUpdate(Request $request)
+    public function searchDailyUpdate(Request $request , $month , $year)
     {
+        if($request->isMethod("GET")){
+            $updates = Timer::where('user_id', auth()->id())
+                ->where('daily_update', '!=', null)
+                ->where('check_out', "!=", null)
+                ->whereMonth('check_out', $month)
+                ->whereYear('check_out', $year)
+                ->join("users", "users.id", "=", "timesheet.user_id")
+                ->orderBy('timesheet.check_out', 'desc')
+                ->get(['users.name', 'timesheet.*']);
+
+            return view("employee.daily_report.index", ['updates' => $updates]);
+        }else{
+            return redirect()->back();
+        }
 
     }
     public function getPostDescription(Request $request)

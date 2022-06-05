@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
     //Searching route
     Route::get('/get-post-description', 'SearchController@getPostDescription');
-    Route::get('/search-dailyupdate', 'SearchController@searchDailyUpdate')->name('searchDailyUpdate');
+    Route::get('/search-daily-update/{month}/{year}', 'SearchController@searchDailyUpdate');
 });
 
 ##############################################################   Admin Routes    ############################################################
@@ -95,7 +95,7 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::post('/delete-ho-request/{id}', 'EmployeeHomeOfficeController@delete')->name('delete_home_request');
     //App:Daily Update
     Route::match(['get', 'post'], '/daily-update', 'EmployeeDailyUpdateController@index')->name('daily_update');
-    Route::post('/update-daily-update/{id}', 'EmployeeDailyUpdateController@update')->name('update_task');
+    Route::post('/edit-daily-update', 'EmployeeDailyUpdateController@update')->name('update_task');
     Route::match(['get', 'post'], '/pending-update', 'EmployeeDashboardController@pendingUpdate')->name('pending_update');
     //App:View
     Route::get('office-days', 'EmployeeViewController@index')->name('office_days');
