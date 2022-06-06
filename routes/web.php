@@ -97,6 +97,8 @@ Route::prefix('employee')->name('employee.')->middleware(['auth', 'employee'])->
     Route::match(['get', 'post'], '/daily-update', 'EmployeeDailyUpdateController@index')->name('daily_update');
     Route::post('/edit-daily-update', 'EmployeeDailyUpdateController@update')->name('update_task');
     Route::match(['get', 'post'], '/pending-update', 'EmployeeDashboardController@pendingUpdate')->name('pending_update');
+    Route::get('/pdf-generate/{month}/{year}', 'PdfGerneratorController@index')->name('download_monthly_report');
+
     //App:View
     Route::get('office-days', 'EmployeeViewController@index')->name('office_days');
 });

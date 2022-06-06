@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 //Custom Models
 use App\Timer;
@@ -24,7 +25,9 @@ class EmployeeDailyUpdateController extends Controller
             ->join("users", "users.id", "=", "timesheet.user_id")
             ->orderBy('timesheet.check_out', 'desc')
             ->get(['users.name', 'timesheet.*']);
-        return view("employee.daily_report.index", ['updates' => $updates]);
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
+        return view("employee.daily_report.index", ['updates' => $updates , 'month' => $month , 'year' => $year]);
     }
     /**
      * Update Daily Task

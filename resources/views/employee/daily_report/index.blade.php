@@ -17,7 +17,7 @@
                 <div class="container" id="post_data">
                     <div id="update_msg">
                     </div>
-                    {{-- @if (session()->has('success'))
+                    @if (session()->has('success'))
                         <div class="alert alert-custom alert-light-success fade show mb-5 d-flex py-2" role="alert">
                             <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
                             <div class="alert-text">{{ session()->get('success') }}
@@ -43,7 +43,6 @@
                     @endif
                     @if (session()->has('warning'))
                         <div class="alert alert-custom alert-light-warning fade show mb-5 d-flex py-2" role="alert">
-                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
                             <div class="alert-text">{{ session()->get('warning') }}
                             </div>
                             <div class="alert-close">
@@ -52,14 +51,13 @@
                                 </button>
                             </div>
                         </div>
-                    @endif --}}
-
+                    @endif
                         <div class="row">
 
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <select class="form-control" id="MonthSelect">
-                                                    <option selected value="">Choose Month</option>
+                                                    <option selected value="-1">Choose Month</option>
                                                     <option value=1>January</option>
                                                     <option value=2>February</option>
                                                     <option value=3>March</option>
@@ -78,7 +76,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <select class="form-control" id="YearSelect">
-                                                    <option selected value="">Choose Year</option>
+                                                    <option selected value="-1">Choose Year</option>
                                                     <option value={{  Carbon\Carbon::now()->year-2 }}>{{  Carbon\Carbon::now()->year-2 }}</option>
                                                     <option value={{ Carbon\Carbon::now()->year-1}}>{{  Carbon\Carbon::now()->year-1 }}</option>
                                                     <option value={{ Carbon\Carbon::now()->year}}>{{  Carbon\Carbon::now()->year }}</option>
@@ -95,7 +93,9 @@
                                         <div class="col-md-3">
                                             <div class="float-right">
                                             <a href="{{ route("employee.daily_update") }}"><button class="btn btn-primary" id="get_data"><i class="flaticon2-refresh-arrow icon-lg"></i></button></a>
-                                                <button class="btn btn-primary" id="get_data"><i class="flaticon2-print icon-lg"></i></button>
+                                            @if(count($updates) > 0)
+                                            <a href="{{ route("employee.download_monthly_report",[$month,$year]) }}">  <button class="btn btn-primary" id="get_data"><i class="flaticon2-print icon-lg"></i></button></a>
+                                            @endif
                                             </div>
                                         </div>
                             </div>
