@@ -40,7 +40,7 @@
                                                             {{ $item->position }}
                                                         </div>
                                                         <div class="status"> <i class="fa fa-circle online"></i>
-                                                            online
+                                                            online - Checked In: {{ \Carbon\Carbon::parse($item->check_in)->format('h:i') }}
                                                         </div>
                                                     </div>
                                                 </li>

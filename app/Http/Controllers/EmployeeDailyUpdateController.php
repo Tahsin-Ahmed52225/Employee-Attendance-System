@@ -25,8 +25,8 @@ class EmployeeDailyUpdateController extends Controller
             ->join("users", "users.id", "=", "timesheet.user_id")
             ->orderBy('timesheet.check_out', 'desc')
             ->get(['users.name', 'timesheet.*']);
-        $month = Carbon::now()->month;
-        $year = Carbon::now()->year;
+        $month = -1;
+        $year =  -1;
         return view("employee.daily_report.index", ['updates' => $updates , 'month' => $month , 'year' => $year]);
     }
     /**

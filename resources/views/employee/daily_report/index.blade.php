@@ -94,7 +94,7 @@
                                             <div class="float-right">
                                             <a href="{{ route("employee.daily_update") }}"><button class="btn btn-primary" id="get_data"><i class="flaticon2-refresh-arrow icon-lg"></i></button></a>
                                             @if(count($updates) > 0)
-                                            <a href="{{ route("employee.download_monthly_report",[$month,$year]) }}">  <button class="btn btn-primary" id="get_data"><i class="flaticon2-print icon-lg"></i></button></a>
+                                            <a target="_blank" href="{{ route("employee.download_monthly_report",[$month,$year]) }}">  <button class="btn btn-primary" id="get_data"><i class="flaticon2-print icon-lg"></i></button></a>
                                             @endif
                                             </div>
                                         </div>
