@@ -11,8 +11,19 @@
         <div>
             <!--begin::Container-->
             <div class="container">
+                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                @if(Session::has('alert-' . $msg))
+                                    @if($msg == 'success')
+                                        <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+
+                                    @else
+                                    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                                    @endif
+                                @endif
+                @endforeach
                 <!--begin::Profile Account Information-->
                 <div class="row ">
+                   
                     <div class="col-md-4 col-sm-12 ">
                         <!--begin::Profile Card-->
                         <div class="card card-custom  my-auto">
@@ -62,12 +73,13 @@
                         <!--begin::Card-->
                         <div class="card card-custom  my-auto pt-4" id="account_info">
                             <!--begin::Header-->
-                            <div class="card-header py-5">
-                                <div class="card-title w-100 justify-content-between">
-                                    <div class="float-left">
-                                        <h3 class="card-label font-weight-bolder text-dark">Account Information</h3>
-                                    </div>
-                                </div>
+                            <div class="card-header py-5 ">
+
+
+
+                                            <h3 class="card-title font-weight-bold text-dark">Account Information</h3>
+
+
 
 
                             </div>

@@ -15,6 +15,7 @@ class AdminViewController extends Controller
     {
         if ($request->isMethod("GET")) {
             $user_id = decrypt($id);
+       //     dd($user_id);
             if (User::where('id',$user_id)->first()) {
                 //Office Days
                 $office_days = Timer::where('user_id', $user_id)
@@ -23,6 +24,7 @@ class AdminViewController extends Controller
                     ->where('daily_update', '!=', null)
                     ->where('status', '!=', 'Absent')
                     ->where('status', '!=', 'Pending')
+                    ->where('status', '!=', 'HO')
                     ->get();
 
                 //home_office
@@ -32,10 +34,9 @@ class AdminViewController extends Controller
 
                 //Home office list
                 $absent = Timer::where('user_id', $user_id)
-                    ->where('check_in', null)
+                    ->where('status', 'Absent')
                     ->where('check_out', null)
                     ->where('daily_update', null)
-                    ->where('status', '==', 'Absent')
                     ->get();
 
 

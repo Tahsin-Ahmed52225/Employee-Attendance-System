@@ -14,14 +14,14 @@
     <div class="content d-flex flex-column flex-column-fluid " id="kt_content">
         <div class="container">
             <div class="card card-custom">
-                <div class="card-body row">
+                <div class="card-body row ">
 
                     <div class="col">
                         <h3>{{ $user->name }}</h3>
                     </div>
-                    <div class="col">
+                    <div class="col ">
                         <a href="{{ route('admin.view_profile', ['id' => encrypt($user->id)]) }}"><button
-                                class="btn btn-sm btn-primary">View Profile</button>
+                                class="btn btn-sm btn-primary float-right">View Profile</button>
                         </a>
                     </div>
 
@@ -95,16 +95,7 @@
                                         <tr>
                                             <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
                                             <td>
-                                                @php
-                                                    if ($item->status == 'Pending') {
-                                                        echo '<span class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill">Pending</span>';
-                                                    } else {
-                                                        $badge = App\Helpers::stringToBadge($item->status);
-                                                        foreach ($badge as $key => $value) {
-                                                            echo $value;
-                                                        }
-                                                    }
-                                                @endphp
+                                                <span class="badge badge-danger mr-1">Absent</span>
                                             </td>
                                         </tr>
                                     @endforeach

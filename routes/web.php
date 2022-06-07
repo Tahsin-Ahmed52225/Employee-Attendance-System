@@ -73,6 +73,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/delete-office-holidays/{id}', 'HolidayController@delete')->name('delete_office_holidays');
 
 
+
+
     //App:Settings
     Route::match(['get', 'post'], '/settings', 'SettingController@index')->name('settings');
 });
